@@ -248,25 +248,88 @@ function CheckoutForm({ onClose }) {
   );
 }
 
-/* ---------- style tokens ---------- */
+/* ---------- style tokens (polished) ---------- */
+const colors = {
+  ink: "#0f172a",
+  text: "#0f172a",
+  sub: "#475569",
+  border: "#e2e8f0",
+  accent: "#0f172a",
+  pageBg: "#f1f5f9",     // NEW: soft page background
+  cardBg: "#ffffff",
+};
+
 const btnSolid = {
-  background: "#0f172a",
+  background: colors.accent,
   color: "white",
   border: "none",
   padding: "12px 16px",
   borderRadius: 12,
   cursor: "pointer",
-  fontSize: 14
+  fontSize: 14,
 };
+
 const btnOutline = {
   background: "transparent",
-  color: "#0f172a",
-  border: "1px solid #cbd5e1",
+  color: colors.accent,
+  border: `1px solid ${colors.border}`,
   padding: "12px 16px",
   borderRadius: 12,
   cursor: "pointer",
-  fontSize: 14
+  fontSize: 14,
 };
+
+const h2 = {
+  fontSize: "1.75rem",
+  fontWeight: 800,
+  textAlign: "center",
+  margin: 0,
+  color: colors.text,
+};
+
+const container = { maxWidth: 960, margin: "0 auto" }; // NEW: consistent width
+
+const sectionCard = {
+  background: colors.cardBg,
+  border: `1px solid ${colors.border}`,
+  borderRadius: 16,
+  boxShadow: "0 1px 2px rgba(2,6,23,0.06)",
+};
+
+const modalBackdrop = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.55)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 12,
+  zIndex: 50,
+};
+
+const modalCard = {
+  background: colors.cardBg,
+  borderRadius: 16,
+  padding: 16,
+  width: "100%",
+  maxWidth: 520,
+  boxShadow: "0 12px 30px rgba(2,6,23,0.24)",
+  border: `1px solid ${colors.border}`,
+};
+
+const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
+
+const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
+
+const input = {
+  width: "100%",
+  padding: "10px 12px",
+  borderRadius: 12,
+  border: `1px solid ${colors.border}`,
+  background: "#fff",
+  marginTop: 4,
+};
+
 const h2 = { fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0 };
 const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
 const modalCard = { background: "#ffffff", borderRadius: 12, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" };
