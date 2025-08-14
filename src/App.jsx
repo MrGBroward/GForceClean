@@ -291,46 +291,59 @@ const h2 = {
 
 const container = { maxWidth: 960, margin: "0 auto" }; // NEW: consistent width
 
-const sectionCard = {
-  background: colors.cardBg,
-  border: `1px solid ${colors.border}`,
-  borderRadius: 16,
-  boxShadow: "0 1px 2px rgba(2,6,23,0.06)",
-};
+<section id="contact" style={{ padding: "2.5rem 1rem", background: colors.pageBg }}>
+  <div style={container}>
+    <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
+    <p style={{ textAlign: "center", color: "#475569", marginBottom: 16 }}>
+      Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+    </p>
 
-const modalBackdrop = {
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.55)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 12,
-  zIndex: 50,
-};
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p style={{ display: "none" }}>
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
 
-const modalCard = {
-  background: colors.cardBg,
-  borderRadius: 16,
-  padding: 16,
-  width: "100%",
-  maxWidth: 520,
-  boxShadow: "0 12px 30px rgba(2,6,23,0.24)",
-  border: `1px solid ${colors.border}`,
-};
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+        <label style={label}>
+          Name
+          <input name="name" required style={input} />
+        </label>
+        <label style={label}>
+          Email
+          <input type="email" name="email" required style={input} />
+        </label>
+      </div>
 
-const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
+      <label style={label}>
+        What would you like cleaned?
+        <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+      </label>
 
-const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
+      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <button type="submit" style={btnSolid}>Send</button>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: "#64748b" }}>
+          <ImageWithFallback
+            srcs={[
+              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png",
+            ]}
+            alt="Klarna"
+            style={{ height: 14 }}
+          />
+          <span>*Financing available.</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
 
-const input = {
-  width: "100%",
-  padding: "10px 12px",
-  borderRadius: 12,
-  border: `1px solid ${colors.border}`,
-  background: "#fff",
-  marginTop: 4,
-};
 
 const h2 = { fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0 };
 const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
