@@ -51,7 +51,7 @@ export default function App() {
   const options = clientSecret ? { clientSecret } : undefined;
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a" }}>
+    <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a", background: colors.pageBg }}>
       {/* Hero */}
       <section style={{ padding: "4rem 1rem", background: "#f8fafc", textAlign: "center" }}>
         <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800 }}>
