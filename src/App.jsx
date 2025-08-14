@@ -339,6 +339,71 @@ function Testimonials() {
   );
 }
 
+/* ---------- Before / After (single slider) ---------- */
+function BeforeAfter({ beforeSrc, afterSrc, alt = "Before and after" }) {
+  const [pos, setPos] = useState(50); // 0..100%
+  return (
+    <div style={{ ...sectionCard, position: "relative", overflow: "hidden", height: 320 }}>
+      {/* Before image */}
+      <img
+        src={beforeSrc}
+        alt={`${alt} - before`}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+      {/* After image clipped to slider position */}
+      <div style={{ position: "absolute", inset: 0, width: `${pos}%`, overflow: "hidden`" }}>
+        <img
+          src={afterSrc}
+          alt={`${alt} - after`}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+        />
+      </div>
+      {/* Drag slider */}
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value={pos}
+        onChange={(e) => setPos(Number(e.target.value))}
+        style={{ position: "absolute", left: 12, right: 12, bottom: 12, width: "calc(100% - 24px)" }}
+        aria-label="Before/After slider"
+      />
+    </div>
+  );
+}
+
+/* ---------- Before & After Gallery (section) ---------- */
+function BeforeAfterGallery() {
+  // Add your pairs here. Paths are relative to /public
+  const pairs = [
+    {
+      before: "/images/roof-before.jpg",
+      after: "/images/roof-after.jpg",
+      alt: "Roof cleaning"
+    },
+    {
+      before: "/images/driveway-before.jpg",
+      after: "/images/driveway-after.jpg",
+      alt: "Driveway cleaning"
+    },
+    // Add more like:
+    // { before: "/images/pavers-before.jpg", after: "/images/pavers-after.jpg", alt: "Paver cleaning" },
+  ];
+
+  return (
+    <section style={{ padding: "2.5rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
+        <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
+          {pairs.map((p, i) => (
+            <BeforeAfter key={i} beforeSrc={p.before} afterSrc={p.after} alt={p.alt} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- style tokens (polished) ---------- */
 const colors = {
   ink: "#0f172a",
