@@ -8,12 +8,11 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const [amount, setAmount] = useState("350.00"); // you can change default
+  const [amount, setAmount] = useState("350.00"); // change default if you like
   const [email, setEmail] = useState("");
 
   async function startPayment() {
     try {
-      // convert dollars to cents
       const cents = Math.round(parseFloat(amount) * 100);
       if (!cents || cents <= 0) {
         alert("Enter a valid amount (e.g., 350.00)");
@@ -172,7 +171,6 @@ function CheckoutForm({ email, onClose }) {
       setError(err.message || "Payment could not be confirmed.");
       setSubmitting(false);
     } else {
-      // For some methods (like cards) there may be no redirect
       onClose();
     }
   }
