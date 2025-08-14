@@ -84,6 +84,14 @@ export default function App() {
           <li>Heavy equipment & dumpster pads</li>
         </ul>
       </section>
+      
+{/* Services */}
+<section>…</section>
+
+<Testimonials />
+
+{/* Contact */}
+<section id="contact">…</section>
 
       {/* Contact */}
       <section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc", textAlign: "center" }}>
