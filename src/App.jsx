@@ -37,18 +37,15 @@ export default function App() {
 
   const options = clientSecret ? { clientSecret } : undefined;
 
-  return (
-    <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a" }}>
-      {/* Hero */}
-      <section style={{ padding: "4rem 1rem", background: "#f8fafc", textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800 }}>G-Force Exterior Cleaning</h1>
-        <p style={{ fontSize: "1.1rem", maxWidth: 740, margin: "0 auto", color: "#475569" }}>
-          Restore your curb appeal the safe, professional way. We work with any budget (especially on long-term
-          contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
-        </p>
-        <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
-          <ImageWithFallback
-            
+<ImageWithFallback
+  srcs={[
+    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+  ]}
+  alt="Klarna"
+  style={{ height: 22 }}
+/>
+           
   srcs={[
     "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
