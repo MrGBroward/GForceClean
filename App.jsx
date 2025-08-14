@@ -1,10 +1,12 @@
 ```jsx
-  export default function App() {
-    return (
-      <div style={{ padding: '1rem', fontFamily: 'sans-serif' }}>
-        <h1>G‑Force Exterior Cleaning</h1>
-        <p>Site is live! We’ll add full content soon.</p>
-      </div>
-    );
-  }
-  ```
+import React from "react";
+
+export default function App() {
+  return (
+    <div>
+      <h1>G-Force Exterior Cleaning Services</h1>
+      <p>Welcome to our new Netlify-powered website!</p>
+    </div>
+  );
+}
+```
