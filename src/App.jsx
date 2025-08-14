@@ -47,11 +47,15 @@ export default function App() {
           contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
         </p>
         <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg"
-            alt="Klarna"
-            style={{ height: 22 }}
-          />
+          <ImageWithFallback
+            
+  srcs={[
+    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+  ]}
+  alt="Klarna"
+  style={{ height: 22 }}
+/>
           <span style={{ fontSize: 12, color: "#64748b" }}>*Subject to approval. Terms from Klarna.</span>
         </div>
         <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center" }}>
@@ -78,15 +82,16 @@ export default function App() {
         <p>Call <a href="tel:+17543340220">(754) 334-0220</a> or email <a href="mailto:bruce@gforcepressurewashing.com">bruce@gforcepressurewashing.com</a></p>
       </section>
 
-      {/* Footer with Klarna badge */}
-      <footer style={{ padding: "1.25rem", background: "#0f172a", color: "white", textAlign: "center" }}>
-        <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg"
-          alt="Klarna"
-          style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
-        />
-      </footer>
+     <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+  <ImageWithFallback
+    srcs={[
+      "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+    ]}
+    alt="Klarna"
+    style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
+  />
+</div>
 
       {/* Modal */}
       {showModal && (
