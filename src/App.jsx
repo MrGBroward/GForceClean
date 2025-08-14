@@ -73,22 +73,19 @@ export default function App() {
         </ul>
       </section>
 
-      {/* Contact */}
-      <section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc", textAlign: "center" }}>
-        <h2 style={h2}>Get Your Free Quote</h2>
-        <p>Call <a href="tel:+17543340220">(754) 334-0220</a> or email <a href="mailto:bruce@gforcepressurewashing.com">bruce@gforcepressurewashing.com</a></p>
-      </section>
+      // Contact
+<section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+  <div style={{ maxWidth: 760, margin: "0 auto" }}>
+    <h2 style={{ fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0, marginBottom: "0.5rem" }}>
+      Get Your Free Quote
+    </h2>
+    <p style={{ textAlign: "center", color: "#475569", marginBottom: 16 }}>
+      Prefer to call? <a href="tel:+17543340220">(754) 334-0220</a> • or email <a href="mailto:bruce@gforcepressurewashing.com">bruce@gforcepressurewashing.com</a>
+    </p>
 
-     <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-  <ImageWithFallback
-    srcs={[
-      "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-    ]}
-    alt="Klarna"
-    style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
-  />
-</div>
+    <ContactForm />
+  </div>
+</section>
 
       {/* Modal */}
       {showModal && (
