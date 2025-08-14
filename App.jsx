@@ -167,33 +167,53 @@ export default function App() {
   );
 }
 
-function CheckoutForm({ email, onClose }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-    setSubmitting(true);
-    setError("");
-
-    const { error: err } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: window.location.href, // after Klarna redirect
-        receipt_email: email || undefined
-      }
-    });
-
-    if (err) {
-      setError(err.message || "Payment could not be confirmed.");
-      setSubmitting(false);
-    } else {
-      onClose();
+/* ---------- Testimonials ---------- */
+function Testimonials() {
+  const items = [
+    {
+      quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.",
+      name: "Erica P.",
+      role: "Homeowner – Coral Springs",
+      photo: "https://i.imgur.com/6VBx3io.png"
+    },
+    {
+      quote: "Reliable, fast, and professional. Perfect for HOA common areas and sidewalks.",
+      name: "David R.",
+      role: "HOA Board Member – Pembroke Pines",
+      photo: "https://i.imgur.com/6VBx3io.png"
+    },
+    {
+      quote: "Our storefront shines after every service. Customers noticed immediately.",
+      name: "Monique L.",
+      role: "Retail Manager – Fort Lauderdale",
+      photo: "https://i.imgur.com/6VBx3io.png"
     }
-  }
+  ];
+
+  return (
+    <section style={{ padding: "2.5rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12 }}>What Clients Say</h2>
+        <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
+          {items.map((t, i) => (
+            <div key={i} style={{ ...sectionCard, padding: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
+                <div style={{ width: 44, height: 44, borderRadius: "50%", overflow: "hidden", border: `1px solid ${colors.border}`, flexShrink: 0 }}>
+                  <img src={t.photo} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700 }}>{t.name}</div>
+                  <div style={{ fontSize: 12, color: colors.sub }}>{t.role}</div>
+                </div>
+              </div>
+              <p style={{ color: colors.sub, margin: 0 }}>&ldquo;{t.quote}&rdquo;</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
   return (
     <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
