@@ -112,7 +112,9 @@ export default function App() {
       </section>
      
       <Testimonials />
-
+      
+<BeforeAfterGallery />
+      
  /* ---------- Before & After (grid of split photos) ---------- */
 function BeforeAfterGallery() {
   // 🔁 Replace these with your EXACT filenames in /public/images (case-sensitive)
