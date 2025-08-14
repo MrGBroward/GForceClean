@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+function ImageWithFallback({ srcs = [], alt = "", style }) {
+  const [i, setI] = useState(0);
+  if (!srcs.length) return null;
+  return (
+    <img
+      src={srcs[i]}
+      alt={alt}
+      style={style}
+      onError={() => setI((prev) => (prev + 1 < srcs.length ? prev + 1 : prev))}
+    />
+  );
+}
 
 // Load publishable key from Netlify env (Vite style). If empty, the modal will warn.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
