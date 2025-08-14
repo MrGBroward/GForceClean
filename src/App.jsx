@@ -113,6 +113,8 @@ export default function App() {
      
       <Testimonials />
 
+<BeforeAfterGallery />
+
       {/* Contact (Netlify Form) */}
       <section id="contact" style={{ padding: "2.5rem 1rem" }}>
         <div style={container}>
