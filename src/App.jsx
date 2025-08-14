@@ -52,31 +52,38 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a", background: colors.pageBg }}>
-      {/* Hero */}
-      <section style={{ padding: "4rem 1rem", background: "#f8fafc", textAlign: "center" }}>
-        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800 }}>
-          G-Force Exterior Cleaning
-        </h1>
-        <p style={{ fontSize: "1.1rem", maxWidth: 740, margin: "0 auto", color: "#475569" }}>
-          Restore your curb appeal the safe, professional way. We work with any budget (especially on long-term
-          contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
-        </p>
-        <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
-          <ImageWithFallback
-            srcs={[
-              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-            ]}
-            alt="Klarna"
-            style={{ height: 22 }}
-          />
-          <span style={{ fontSize: 12, color: "#64748b" }}>*Subject to approval. Terms from Klarna.</span>
-        </div>
-        <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="#contact" style={btnSolid}>Call for a quote</a>
-          <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
-        </div>
-      </section>
+     <section
+  style={{
+    padding: "4rem 1rem",
+    background: "linear-gradient(180deg, #eef2ff 0%, #f8fafc 50%, #f1f5f9 100%)",
+    borderBottom: `1px solid ${colors.border}`,
+  }}
+>
+  <div style={container}>
+    <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800, color: colors.ink }}>
+      G-Force Exterior Cleaning
+    </h1>
+    <p style={{ fontSize: "1.1rem", maxWidth: 740, margin: "0 auto", color: colors.sub }}>
+      Restore your curb appeal the safe, professional way. We work with any budget (especially on long-term
+      contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
+    </p>
+    <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
+      <ImageWithFallback
+        srcs={[
+          "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png",
+        ]}
+        alt="Klarna"
+        style={{ height: 22 }}
+      />
+      <span style={{ fontSize: 12, color: colors.sub }}>*Subject to approval. Terms from Klarna.</span>
+    </div>
+    <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+      <a href="#contact" style={btnSolid}>Call for a quote</a>
+      <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
+    </div>
+  </div>
+</section>
 
       {/* Services */}
       <section style={{ padding: "2.5rem 1rem", background: "#ffffff" }}>
