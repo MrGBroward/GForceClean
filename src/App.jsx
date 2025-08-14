@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
-// Publishable key from Netlify env (Vite-style). If missing, the modal will warn.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
 /* ---------- tiny helper: image fallback (for Klarna logo reliability) ---------- */
@@ -22,7 +21,7 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const [amount, setAmount] = useState("350.00"); // change default if you like
+  const [amount, setAmount] = useState("350.00"); // default; change anytime
 
   async function startPayment() {
     try {
@@ -34,7 +33,7 @@ export default function App() {
       const res = await fetch("/.netlify/functions/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // no email sent — per your request
+        // no email collected/sent per your request
         body: JSON.stringify({
           amount: cents,
           currency: "usd",
@@ -53,7 +52,7 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a" }}>
-      {/* Header / Hero */}
+      {/* Hero */}
       <section style={{ padding: "4rem 1rem", background: "#f8fafc", textAlign: "center" }}>
         <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800 }}>
           G-Force Exterior Cleaning
@@ -91,15 +90,61 @@ export default function App() {
         </ul>
       </section>
 
-      {/* Contact (phone only, no email link) */}
-      <section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc", textAlign: "center" }}>
-        <h2 style={h2}>Get Your Free Quote</h2>
-        <p style={{ marginBottom: 16, color: "#475569" }}>
-          Call us now at <a href="tel:+17543340220" style={{ color: "#0f172a" }}>(754) 334-0220</a>
-        </p>
-        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="tel:+17543340220" style={btnSolid}>Tap to Call</a>
-          <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
+      {/* Contact (Netlify Form) */}
+      <section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
+          <p style={{ textAlign: "center", color: "#475569", marginBottom: 16 }}>
+            Prefer to call? <a href="tel:+17543340220" style={{ color: "#0f172a" }}>(754) 334-0220</a>
+          </p>
+
+          {/* Netlify will detect this form and collect submissions in the dashboard */}
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            style={{ display: "grid", gap: 12, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 16 }}
+          >
+            {/* Required hidden inputs for Netlify Forms */}
+            <input type="hidden" name="form-name" value="contact" />
+            <p style={{ display: "none" }}>
+              <label>
+                Don’t fill this out: <input name="bot-field" />
+              </label>
+            </p>
+
+            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+              <label style={label}>
+                Name
+                <input name="name" required style={input} />
+              </label>
+              <label style={label}>
+                Email
+                <input type="email" name="email" required style={input} />
+              </label>
+            </div>
+
+            <label style={label}>
+              What would you like cleaned?
+              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+            </label>
+
+            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+              <button type="submit" style={btnSolid}>Send</button>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: "#64748b" }}>
+                <ImageWithFallback
+                  srcs={[
+                    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+                  ]}
+                  alt="Klarna"
+                  style={{ height: 14 }}
+                />
+                <span>*Financing available.</span>
+              </div>
+            </div>
+          </form>
         </div>
       </section>
 
@@ -127,10 +172,9 @@ export default function App() {
               <button onClick={() => setShowModal(false)} style={xBtn} aria-label="Close">✕</button>
             </div>
 
-            {/* Step 1: set amount (no email) */}
             {!clientSecret && (
               <div style={{ display: "grid", gap: 10 }}>
-                <label>
+                <label style={label}>
                   Project amount (USD)
                   <input
                     type="number"
@@ -153,7 +197,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Step 2: Stripe Payment Element */}
             {clientSecret && (
               <Elements stripe={stripePromise} options={options}>
                 <CheckoutForm onClose={() => setShowModal(false)} />
@@ -182,7 +225,7 @@ function CheckoutForm({ onClose }) {
     const { error: err } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: window.location.href // Stripe/Klarna will redirect back here
+        return_url: window.location.href
       }
     });
 
@@ -224,8 +267,9 @@ const btnOutline = {
   cursor: "pointer",
   fontSize: 14
 };
-const h2 = { fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0, marginBottom: "0.5rem" };
+const h2 = { fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0 };
 const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
 const modalCard = { background: "#ffffff", borderRadius: 12, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" };
 const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
+const label = { display: "grid", gap: 6, fontSize: 14, color: "#0f172a" };
 const input = { width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #cbd5e1", marginTop: 4 };
