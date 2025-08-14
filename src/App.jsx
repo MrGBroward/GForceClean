@@ -33,7 +33,6 @@ export default function App() {
       const res = await fetch("/.netlify/functions/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // no email collected/sent per your request
         body: JSON.stringify({
           amount: cents,
           currency: "usd",
@@ -51,53 +50,73 @@ export default function App() {
   const options = clientSecret ? { clientSecret } : undefined;
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a", background: colors.pageBg }}>
-     <section
-  style={{
-    padding: "4rem 1rem",
-    background: "linear-gradient(180deg, #eef2ff 0%, #f8fafc 50%, #f1f5f9 100%)",
-    borderBottom: `1px solid ${colors.border}`,
-  }}
->
-  <section style={{ padding: "2.5rem 1rem", background: colors.pageBg }}>
-  <div style={container}>
-    <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
-    <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: "#475569" }}>
-      <li>Soft-wash roof cleaning</li>
-      <li>House & building wash</li>
-      <li>Driveways, sidewalks & pavers (sealing optional)</li>
-      <li>HOA & commercial schedules</li>
-      <li>Heavy equipment & dumpster pads</li>
-    </ul>
-  </div>
-</section>
-      <span style={{ fontSize: 12, color: colors.sub }}>*Subject to approval. Terms from Klarna.</span>
-    </div>
-    <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-      <a href="#contact" style={btnSolid}>Call for a quote</a>
-      <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
-    </div>
-  </div>
-</section>
+    <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
+      {/* Hero */}
+      <section
+        style={{
+          padding: "4rem 1rem",
+          background: "linear-gradient(180deg, #eef2ff 0%, #f8fafc 50%, #f1f5f9 100%)",
+          borderBottom: `1px solid ${colors.border}`,
+        }}
+      >
+        <div style={container}>
+          <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800, color: colors.ink }}>
+            G-Force Exterior Cleaning
+          </h1>
+          <p style={{ fontSize: "1.1rem", maxWidth: 740, margin: "0 auto", color: colors.sub }}>
+            Restore your curb appeal the safe, professional way. We work with any budget (especially on long-term
+            contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
+          </p>
+          <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
+            <ImageWithFallback
+              srcs={[
+                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+              ]}
+              alt="Klarna"
+              style={{ height: 22 }}
+            />
+            <span style={{ fontSize: 12, color: colors.sub }}>*Subject to approval. Terms from Klarna.</span>
+          </div>
+          <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#contact" style={btnSolid}>Call for a quote</a>
+            <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
+          </div>
+        </div>
+      </section>
+
+      {/* About Me (placeholder copy for now) */}
+      <section style={{ padding: "2.5rem 1rem" }}>
+        <div style={{ ...container, ...sectionCard, padding: 16 }}>
+          <h2 style={{ ...h2, marginBottom: 8 }}>About G-Force</h2>
+          <p style={{ color: colors.sub, margin: 0 }}>
+            Hi, I’m Mr. G. I help homeowners, HOAs, and businesses in Broward keep properties looking their best with
+            safe soft-wash methods and reliable scheduling. We’ll tailor a plan for your budget—one-time clean or VIP
+            Maintenance—so you get predictable costs and great results.
+          </p>
+        </div>
+      </section>
 
       {/* Services */}
-      <section style={{ padding: "2.5rem 1rem", background: "#ffffff" }}>
-        <h2 style={h2}>Services</h2>
-        <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: "#475569" }}>
-          <li>Soft-wash roof cleaning</li>
-          <li>House & building wash</li>
-          <li>Driveways, sidewalks & pavers (sealing optional)</li>
-          <li>HOA & commercial schedules</li>
-          <li>Heavy equipment & dumpster pads</li>
-        </ul>
+      <section style={{ padding: "2.5rem 1rem" }}>
+        <div style={container}>
+          <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
+          <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
+            <li>Soft-wash roof cleaning</li>
+            <li>House & building wash</li>
+            <li>Driveways, sidewalks & pavers (sealing optional)</li>
+            <li>HOA & commercial schedules</li>
+            <li>Heavy equipment & dumpster pads</li>
+          </ul>
+        </div>
       </section>
 
       {/* Contact (Netlify Form) */}
-      <section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+      <section id="contact" style={{ padding: "2.5rem 1rem" }}>
+        <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-          <p style={{ textAlign: "center", color: "#475569", marginBottom: 16 }}>
-            Prefer to call? <a href="tel:+17543340220" style={{ color: "#0f172a" }}>(754) 334-0220</a>
+          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
           </p>
 
           {/* Netlify will detect this form and collect submissions in the dashboard */}
@@ -106,14 +125,12 @@ export default function App() {
             method="POST"
             data-netlify="true"
             netlify-honeypot="bot-field"
-            style={{ display: "grid", gap: 12, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 16 }}
+            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
           >
             {/* Required hidden inputs for Netlify Forms */}
             <input type="hidden" name="form-name" value="contact" />
             <p style={{ display: "none" }}>
-              <label>
-                Don’t fill this out: <input name="bot-field" />
-              </label>
+              <label>Don’t fill this out: <input name="bot-field" /></label>
             </p>
 
             <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
@@ -134,7 +151,7 @@ export default function App() {
 
             <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
               <button type="submit" style={btnSolid}>Send</button>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: "#64748b" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: colors.sub }}>
                 <ImageWithFallback
                   srcs={[
                     "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
@@ -151,17 +168,19 @@ export default function App() {
       </section>
 
       {/* Footer with Klarna badge */}
-      <footer style={{ padding: "1.25rem", background: "#0f172a", color: "white", textAlign: "center" }}>
-        <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-        <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-          <ImageWithFallback
-            srcs={[
-              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-            ]}
-            alt="Klarna"
-            style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
-          />
+      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center" }}>
+        <div style={container}>
+          <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            <ImageWithFallback
+              srcs={[
+                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+              ]}
+              alt="Klarna"
+              style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
+            />
+          </div>
         </div>
       </footer>
 
@@ -226,9 +245,7 @@ function CheckoutForm({ onClose }) {
 
     const { error: err } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: window.location.href
-      }
+      confirmParams: { return_url: window.location.href }
     });
 
     if (err) {
@@ -257,7 +274,7 @@ const colors = {
   sub: "#475569",
   border: "#e2e8f0",
   accent: "#0f172a",
-  pageBg: "#f1f5f9",     // NEW: soft page background
+  pageBg: "#f1f5f9",
   cardBg: "#ffffff",
 };
 
@@ -289,65 +306,36 @@ const h2 = {
   color: colors.text,
 };
 
-const container = { maxWidth: 960, margin: "0 auto" }; // NEW: consistent width
+const container = { maxWidth: 960, margin: "0 auto" };
 
-<section id="contact" style={{ padding: "2.5rem 1rem", background: colors.pageBg }}>
-  <div style={container}>
-    <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-    <p style={{ textAlign: "center", color: "#475569", marginBottom: 16 }}>
-      Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
-    </p>
+const sectionCard = {
+  background: colors.cardBg,
+  border: `1px solid ${colors.border}`,
+  borderRadius: 16,
+  boxShadow: "0 1px 2px rgba(2,6,23,0.06)",
+};
 
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-    >
-      <input type="hidden" name="form-name" value="contact" />
-      <p style={{ display: "none" }}>
-        <label>Don’t fill this out: <input name="bot-field" /></label>
-      </p>
+const modalBackdrop = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.55)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 12,
+  zIndex: 50,
+};
 
-      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-        <label style={label}>
-          Name
-          <input name="name" required style={input} />
-        </label>
-        <label style={label}>
-          Email
-          <input type="email" name="email" required style={input} />
-        </label>
-      </div>
+const modalCard = {
+  background: colors.cardBg,
+  borderRadius: 16,
+  padding: 16,
+  width: "100%",
+  maxWidth: 520,
+  boxShadow: "0 12px 30px rgba(2,6,23,0.24)",
+  border: `1px solid ${colors.border}`,
+};
 
-      <label style={label}>
-        What would you like cleaned?
-        <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-      </label>
-
-      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-        <button type="submit" style={btnSolid}>Send</button>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: "#64748b" }}>
-          <ImageWithFallback
-            srcs={[
-              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png",
-            ]}
-            alt="Klarna"
-            style={{ height: 14 }}
-          />
-          <span>*Financing available.</span>
-        </div>
-      </div>
-    </form>
-  </div>
-</section>
-
-
-const h2 = { fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0 };
-const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
-const modalCard = { background: "#ffffff", borderRadius: 12, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 10px 30px rgba(0,0,0,0.2)" };
 const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
-const label = { display: "grid", gap: 6, fontSize: 14, color: "#0f172a" };
-const input = { width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #cbd5e1", marginTop: 4 };
+const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
+const input = { width: "100%", padding: "10px 12px", borderRadius: 12, border: `1px solid ${colors.border}`, background: "#fff", marginTop: 4 };
