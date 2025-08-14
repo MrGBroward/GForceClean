@@ -2,13 +2,27 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
+// Publishable key from Netlify env (Vite-style). If missing, the modal will warn.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
+
+/* ---------- tiny helper: image fallback (for Klarna logo reliability) ---------- */
+function ImageWithFallback({ srcs = [], alt = "", style }) {
+  const [i, setI] = useState(0);
+  if (!srcs.length) return null;
+  return (
+    <img
+      src={srcs[i]}
+      alt={alt}
+      style={style}
+      onError={() => setI((prev) => (prev + 1 < srcs.length ? prev + 1 : prev))}
+    />
+  );
+}
 
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const [amount, setAmount] = useState("350.00");
-  const [email, setEmail] = useState("");
+  const [amount, setAmount] = useState("350.00"); // change default if you like
 
   async function startPayment() {
     try {
@@ -20,10 +34,10 @@ export default function App() {
       const res = await fetch("/.netlify/functions/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // no email sent — per your request
         body: JSON.stringify({
           amount: cents,
           currency: "usd",
-          customer_email: email || undefined,
           metadata: { source: "GForce Netlify" }
         })
       });
@@ -37,26 +51,30 @@ export default function App() {
 
   const options = clientSecret ? { clientSecret } : undefined;
 
-<ImageWithFallback
-  srcs={[
-    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-  ]}
-  alt="Klarna"
-  style={{ height: 22 }}
-/>
-           
-  srcs={[
-    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-  ]}
-  alt="Klarna"
-  style={{ height: 22 }}
-/>
+  return (
+    <div style={{ fontFamily: "system-ui, sans-serif", color: "#0f172a" }}>
+      {/* Header / Hero */}
+      <section style={{ padding: "4rem 1rem", background: "#f8fafc", textAlign: "center" }}>
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800 }}>
+          G-Force Exterior Cleaning
+        </h1>
+        <p style={{ fontSize: "1.1rem", maxWidth: 740, margin: "0 auto", color: "#475569" }}>
+          Restore your curb appeal the safe, professional way. We work with any budget (especially on long-term
+          contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
+        </p>
+        <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
+          <ImageWithFallback
+            srcs={[
+              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+            ]}
+            alt="Klarna"
+            style={{ height: 22 }}
+          />
           <span style={{ fontSize: 12, color: "#64748b" }}>*Subject to approval. Terms from Klarna.</span>
         </div>
-        <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center" }}>
-          <a href="#contact" style={btnSolid}>Get a same-day quote</a>
+        <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="#contact" style={btnSolid}>Call for a quote</a>
           <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
         </div>
       </section>
@@ -73,21 +91,34 @@ export default function App() {
         </ul>
       </section>
 
-      // Contact
-<section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
-  <div style={{ maxWidth: 760, margin: "0 auto" }}>
-    <h2 style={{ fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0, marginBottom: "0.5rem" }}>
-      Get Your Free Quote
-    </h2>
-    <p style={{ textAlign: "center", color: "#475569", marginBottom: 16 }}>
-      Prefer to call? <a href="tel:+17543340220">(754) 334-0220</a> • or email <a href="mailto:bruce@gforcepressurewashing.com">bruce@gforcepressurewashing.com</a>
-    </p>
+      {/* Contact (phone only, no email link) */}
+      <section id="contact" style={{ padding: "2.5rem 1rem", background: "#f8fafc", textAlign: "center" }}>
+        <h2 style={h2}>Get Your Free Quote</h2>
+        <p style={{ marginBottom: 16, color: "#475569" }}>
+          Call us now at <a href="tel:+17543340220" style={{ color: "#0f172a" }}>(754) 334-0220</a>
+        </p>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="tel:+17543340220" style={btnSolid}>Tap to Call</a>
+          <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
+        </div>
+      </section>
 
-    <ContactForm />
-  </div>
-</section>
+      {/* Footer with Klarna badge */}
+      <footer style={{ padding: "1.25rem", background: "#0f172a", color: "white", textAlign: "center" }}>
+        <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+        <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+          <ImageWithFallback
+            srcs={[
+              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+            ]}
+            alt="Klarna"
+            style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
+          />
+        </div>
+      </footer>
 
-      {/* Modal */}
+      {/* Stripe/Klarna Modal */}
       {showModal && (
         <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
           <div style={modalCard}>
@@ -96,7 +127,7 @@ export default function App() {
               <button onClick={() => setShowModal(false)} style={xBtn} aria-label="Close">✕</button>
             </div>
 
-            {/* Amount + Email step */}
+            {/* Step 1: set amount (no email) */}
             {!clientSecret && (
               <div style={{ display: "grid", gap: 10 }}>
                 <label>
@@ -111,16 +142,6 @@ export default function App() {
                     placeholder="e.g., 350.00"
                   />
                 </label>
-                <label>
-                  Email (for receipt)
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={input}
-                    placeholder="optional@you.com"
-                  />
-                </label>
                 <button style={btnSolid} onClick={startPayment}>
                   Continue to payment
                 </button>
@@ -132,10 +153,10 @@ export default function App() {
               </div>
             )}
 
-            {/* Payment Element */}
+            {/* Step 2: Stripe Payment Element */}
             {clientSecret && (
               <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm email={email} onClose={() => setShowModal(false)} />
+                <CheckoutForm onClose={() => setShowModal(false)} />
               </Elements>
             )}
           </div>
@@ -145,7 +166,8 @@ export default function App() {
   );
 }
 
-function CheckoutForm({ email, onClose }) {
+/* ---------- Stripe checkout form (no email) ---------- */
+function CheckoutForm({ onClose }) {
   const stripe = useStripe();
   const elements = useElements();
   const [submitting, setSubmitting] = useState(false);
@@ -160,8 +182,7 @@ function CheckoutForm({ email, onClose }) {
     const { error: err } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: window.location.href,
-        receipt_email: email || undefined
+        return_url: window.location.href // Stripe/Klarna will redirect back here
       }
     });
 
@@ -184,7 +205,7 @@ function CheckoutForm({ email, onClose }) {
   );
 }
 
-// styles
+/* ---------- style tokens ---------- */
 const btnSolid = {
   background: "#0f172a",
   color: "white",
