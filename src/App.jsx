@@ -59,23 +59,18 @@ export default function App() {
     borderBottom: `1px solid ${colors.border}`,
   }}
 >
+  <section style={{ padding: "2.5rem 1rem", background: colors.pageBg }}>
   <div style={container}>
-    <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800, color: colors.ink }}>
-      G-Force Exterior Cleaning
-    </h1>
-    <p style={{ fontSize: "1.1rem", maxWidth: 740, margin: "0 auto", color: colors.sub }}>
-      Restore your curb appeal the safe, professional way. We work with any budget (especially on long-term
-      contracts), keep cancellations to a minimum, and offer financing through Klarna for all projects.
-    </p>
-    <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
-      <ImageWithFallback
-        srcs={[
-          "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png",
-        ]}
-        alt="Klarna"
-        style={{ height: 22 }}
-      />
+    <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
+    <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: "#475569" }}>
+      <li>Soft-wash roof cleaning</li>
+      <li>House & building wash</li>
+      <li>Driveways, sidewalks & pavers (sealing optional)</li>
+      <li>HOA & commercial schedules</li>
+      <li>Heavy equipment & dumpster pads</li>
+    </ul>
+  </div>
+</section>
       <span style={{ fontSize: 12, color: colors.sub }}>*Subject to approval. Terms from Klarna.</span>
     </div>
     <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
