@@ -113,124 +113,40 @@ export default function App() {
      
       <Testimonials />
 
-<BeforeAfterGallery />
+ /* ---------- Before & After (grid of split photos) ---------- */
+function BeforeAfterGallery() {
+  // 🔁 Replace these with your EXACT filenames in /public/images (case-sensitive)
+  const images = [
+    { src: "/images/ Gas station before and after ", alt: "Gas station" },
+    { src: "/images/ Condo Dirty ", alt: "Condo dirty" },
+    { src: "/images/ Before and after Bulldozer 2.jpg", alt: "Bulldozer" },
+    { src: "/images/ Before and after House 2.jpg", alt: "House" },
+  ];
 
-      {/* Contact (Netlify Form) */}
-      <section id="contact" style={{ padding: "2.5rem 1rem" }}>
-        <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
-          </p>
-
-          {/* Netlify will detect this form and collect submissions in the dashboard */}
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-          >
-            {/* Required hidden inputs for Netlify Forms */}
-            <input type="hidden" name="form-name" value="contact" />
-            <p style={{ display: "none" }}>
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
-
-            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-              <label style={label}>
-                Name
-                <input name="name" required style={input} />
-              </label>
-              <label style={label}>
-                Email
-                <input type="email" name="email" required style={input} />
-              </label>
+  return (
+    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
+        <div
+          style={{
+            display: "grid",
+            gap: 16,
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))"
+          }}
+        >
+          {images.map((img, i) => (
+            <div key={i} style={{ ...sectionCard, overflow: "hidden" }}>
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
             </div>
-
-            <label style={label}>
-              What would you like cleaned?
-              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-            </label>
-
-            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-              <button type="submit" style={btnSolid}>Send</button>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: colors.sub }}>
-                <ImageWithFallback
-                  srcs={[
-                    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-                  ]}
-                  alt="Klarna"
-                  style={{ height: 14 }}
-                />
-                <span>*Financing available.</span>
-              </div>
-            </div>
-          </form>
+          ))}
         </div>
-      </section>
-
-      {/* Footer with Klarna badge */}
-      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center" }}>
-        <div style={container}>
-          <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            <ImageWithFallback
-              srcs={[
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-              ]}
-              alt="Klarna"
-              style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
-            />
-          </div>
-        </div>
-      </footer>
-
-      {/* Stripe/Klarna Modal */}
-      {showModal && (
-        <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
-          <div style={modalCard}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <h3 style={{ margin: 0 }}>Finance with Klarna</h3>
-              <button onClick={() => setShowModal(false)} style={xBtn} aria-label="Close">✕</button>
-            </div>
-
-            {!clientSecret && (
-              <div style={{ display: "grid", gap: 10 }}>
-                <label style={label}>
-                  Project amount (USD)
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="50"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    style={input}
-                    placeholder="e.g., 350.00"
-                  />
-                </label>
-                <button style={btnSolid} onClick={startPayment}>
-                  Continue to payment
-                </button>
-                {!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY && (
-                  <div style={{ fontSize: 12, color: "#b91c1c" }}>
-                    Missing publishable key. Add <code>VITE_STRIPE_PUBLISHABLE_KEY</code> in Netlify → Environment variables.
-                  </div>
-                )}
-              </div>
-            )}
-
-            {clientSecret && (
-              <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm onClose={() => setShowModal(false)} />
-              </Elements>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+      </div>
+    </section>
   );
 }
 
