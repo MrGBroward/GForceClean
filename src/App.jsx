@@ -110,6 +110,8 @@ export default function App() {
           </ul>
         </div>
       </section>
+     
+      <Testimonials />
 
       {/* Contact (Netlify Form) */}
       <section id="contact" style={{ padding: "2.5rem 1rem" }}>
