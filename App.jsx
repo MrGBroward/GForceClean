@@ -1,10 +1,3 @@
-const photos = [
-  { src: "/images/gas-station-before-and-after.jpg", width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
-  { src: "/images/condo-dirty.jpg", width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
-  { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
-  { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" }
-];
-
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
 /* ---------- tiny helper: image fallback (for Klarna logo reliability) ---------- */
