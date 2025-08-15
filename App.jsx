@@ -78,11 +78,19 @@ function BeforeAfterGallery() {
   // Use files placed in: public/images/
   // If one image isn’t ready, leave it commented or use the placeholder row below.
   const photos = [
-    { src: "/images/gas-station-before-and-after.jpg",  width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
-    { src: "/images/condo-dirty.jpg",                   width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
-    { src: "/images/before-and-after-bulldozer-2.jpg",  width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
-    { src: "/images/before-and-after-house-2.jpg",      width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
-    // Fallback (use this if one file isn’t uploaded yet):
+    const photos = [
+    
+  { src: "/images/condo-dirty.jpg",                  width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
+  { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
+  { src: "/images/before-and-after-house-2.jpg",     width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
+
+  // If/when you have the gas-station file uploaded to public/images/, add this back:
+  // { src: "/images/gas-station-before-and-after.jpg",  width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
+
+  // Temporary placeholder (use this if you want 4 tiles right now):
+  // { src: "https://via.placeholder.com/1600x900?text=Before+%26+After", width: 1600, height: 900, alt: "Placeholder" }
+];
+
     // { src: "https://via.placeholder.com/1600x900?text=Before+%26+After", width: 1600, height: 900, alt: "Placeholder" },
   ];
 
