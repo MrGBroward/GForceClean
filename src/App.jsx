@@ -90,14 +90,14 @@ function Testimonials() {
 
 /* ---------- Before & After (grid of split photos) ---------- */
 function BeforeAfterGallery() {
-  // Use your exact filenames in /public/images/.  I've URL-encoded spaces.
-  // If your files are .jpeg or .png, change the extension below.
   const images = [
-    { src: "/images/Gas%20station%20before%20and%20after.jpg", alt: "Gas station before & after" },
-    { src: "/images/Condo%20Dirty.jpg", alt: "Condo dirty vs cleaned" },
-    { src: "/images/Before%20and%20after%20Bulldozer%202.jpg", alt: "Bulldozer before & after" },
-    { src: "/images/Before%20and%20after%20House%202.jpg", alt: "House before & after" },
+    { src: "/images/gas-station-before-and-after.jpg", alt: "Gas station before & after" },
+    { src: "/images/condo-dirty.jpg", alt: "Condo dirty vs cleaned" },
+    { src: "/images/before-and-after-bulldozer-2.jpg", alt: "Bulldozer before & after" },
+    { src: "/images/before-and-after-house-2.jpg", alt: "House before & after" },
   ];
+  // (rest of component unchanged)
+}
 
   return (
     <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
