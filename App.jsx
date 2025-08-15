@@ -89,12 +89,67 @@ function Testimonials() {
 
 /* ---------- Before & After Gallery (rows + lightbox) ---------- */
 function BeforeAfterGallery() {
+  /* ---------- Before & After Gallery (rows + lightbox, public paths) ---------- */
+function BeforeAfterGallery() {
+  // Use files placed in: public/images/
+  // If one image isn’t ready, leave it commented or use the placeholder row below.
   const photos = [
-    { src: "/images/gas-station-before-and-after.jpg", width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
-    { src: "/images/condo-dirty.jpg", width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
-    { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
-    { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
+    { src: "/images/gas-station-before-and-after.jpg",  width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
+    { src: "/images/condo-dirty.jpg",                   width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
+    { src: "/images/before-and-after-bulldozer-2.jpg",  width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
+    { src: "/images/before-and-after-house-2.jpg",      width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
+    // Fallback (use this if one file isn’t uploaded yet):
+    // { src: "https://via.placeholder.com/1600x900?text=Before+%26+After", width: 1600, height: 900, alt: "Placeholder" },
   ];
+
+  // Filter out any images that 404 at runtime (prevents broken tiles)
+  const [index, setIndex] = React.useState(-1);
+  const [ok, setOk] = React.useState({});
+
+  const visible = photos.filter((p) => ok[p.src] !== false);
+
+  return (
+    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
+
+        {/* Preload + detect missing files once */}
+        <div style={{ display: "none" }}>
+          {photos.map((p) => (
+            <img
+              key={p.src}
+              src={p.src}
+              alt=""
+              onLoad={() => setOk((m) => ({ ...m, [p.src]: true }))}
+              onError={() => { console.warn("Missing image:", p.src); setOk((m) => ({ ...m, [p.src]: false })); }}
+            />
+          ))}
+        </div>
+
+        {visible.length > 0 ? (
+          <>
+            <PhotoAlbum
+              layout="rows"
+              photos={visible}
+              targetRowHeight={260}
+              onClick={({ index }) => setIndex(index)}
+            />
+            <Lightbox
+              open={index >= 0}
+              close={() => setIndex(-1)}
+              slides={visible.map((p) => ({ src: p.src, alt: p.alt }))}
+            />
+          </>
+        ) : (
+          <div style={{ ...sectionCard, padding: 16, textAlign: "center", color: "#64748b" }}>
+            Gallery coming soon.
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
   const [index, setIndex] = React.useState(-1);
 
   return (
