@@ -2,6 +2,17 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
+/* Gallery libs */
+import PhotoAlbum from "react-photo-album";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+
+/* Import images so Vite bundles them */
+import gasStation from "./assets/images/gas-station-before-and-after.jpg";
+import condoDirty from "./assets/images/condo-dirty.jpg";
+import bulldozer from "./assets/images/before-and-after-bulldozer-2.jpg";
+import house from "./assets/images/before-and-after-house-2.jpg";
+
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
 /* ---------- tiny helper: image fallback (for Klarna logo reliability) ---------- */
@@ -22,22 +33,19 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
 function Testimonials() {
   const items = [
     {
-      quote:
-        "G-Force made our roof and driveway look brand new. On time, careful, and priced right.",
+      quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.",
       name: "Erica P.",
       role: "Homeowner – Coral Springs",
       photo: "https://i.imgur.com/6VBx3io.png"
     },
     {
-      quote:
-        "Reliable, fast, and professional. Perfect for HOA common areas and sidewalks.",
+      quote: "Reliable, fast, and professional. Perfect for HOA common areas and sidewalks.",
       name: "David R.",
       role: "HOA Board Member – Pembroke Pines",
       photo: "https://i.imgur.com/6VBx3io.png"
     },
     {
-      quote:
-        "Our storefront shines after every service. Customers noticed immediately.",
+      quote: "Our storefront shines after every service. Customers noticed immediately.",
       name: "Monique L.",
       role: "Retail Manager – Fort Lauderdale",
       photo: "https://i.imgur.com/6VBx3io.png"
@@ -48,13 +56,7 @@ function Testimonials() {
     <section style={{ padding: "2.5rem 1rem" }}>
       <div style={container}>
         <h2 style={{ ...h2, marginBottom: 12 }}>What Clients Say</h2>
-        <div
-          style={{
-            display: "grid",
-            gap: 16,
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))"
-          }}
-        >
+        <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {items.map((t, i) => (
             <div key={i} style={{ ...sectionCard, padding: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
@@ -68,11 +70,7 @@ function Testimonials() {
                     flexShrink: 0
                   }}
                 >
-                  <img
-                    src={t.photo}
-                    alt={t.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
+                  <img src={t.photo} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 </div>
                 <div>
                   <div style={{ fontWeight: 700 }}>{t.name}</div>
@@ -88,42 +86,26 @@ function Testimonials() {
   );
 }
 
-/* ---------- Before & After (grid of split photos) ---------- */
+/* ---------- Before & After Gallery (rows + lightbox) ---------- */
 function BeforeAfterGallery() {
-  const images = [
-    { src: "/images/gas-station-before-and-after.jpg", alt: "Gas station before & after" },
-    { src: "/images/condo-dirty.jpg", alt: "Condo dirty vs cleaned" },
-    { src: "/images/before-and-after-bulldozer-2.jpg", alt: "Bulldozer before & after" },
-    { src: "/images/before-and-after-house-2.jpg", alt: "House before & after" },
+  const photos = [
+    { src: gasStation, width: 1600, height: 900, alt: "Gas station before & after" },
+    { src: condoDirty, width: 1600, height: 900, alt: "Condo dirty vs cleaned" },
+    { src: bulldozer, width: 1600, height: 900, alt: "Bulldozer before & after" },
+    { src: house, width: 1600, height: 900, alt: "House before & after" },
   ];
-}
+  const [index, setIndex] = React.useState(-1);
 
   return (
     <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
       <div style={container}>
         <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
-        <div
-          style={{
-            display: "grid",
-            gap: 16,
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))"
-          }}
-        >
-          {images.map((img, i) => (
-            <div key={i} style={{ ...sectionCard, overflow: "hidden" }}>
-              <img
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                style={{ width: "100%", height: "auto", display: "block" }}
-                onError={(e) => {
-                  // helpful console note if a filename/extension doesn't match
-                  console.warn("Image not found:", img.src);
-                }}
-              />
-            </div>
-          ))}
-        </div>
+        <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260} onClick={({ index }) => setIndex(index)} />
+        <Lightbox
+          open={index >= 0}
+          close={() => setIndex(-1)}
+          slides={photos.map((p) => ({ src: p.src, alt: p.alt }))}
+        />
       </div>
     </section>
   );
@@ -132,7 +114,7 @@ function BeforeAfterGallery() {
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
-  const [amount, setAmount] = useState("350.00"); // default; change anytime
+  const [amount, setAmount] = useState("350.00");
 
   async function startPayment() {
     try {
@@ -144,11 +126,7 @@ export default function App() {
       const res = await fetch("/.netlify/functions/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          amount: cents,
-          currency: "usd",
-          metadata: { source: "GForce Netlify" }
-        })
+        body: JSON.stringify({ amount: cents, currency: "usd", metadata: { source: "GForce Netlify" } })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Failed to create payment intent");
@@ -198,7 +176,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* About (kept) */}
+      {/* About */}
       <section style={{ padding: "2.5rem 1rem" }}>
         <div style={{ ...container, ...sectionCard, padding: 16 }}>
           <h2 style={{ ...h2, marginBottom: 8 }}>About G-Force</h2>
@@ -234,7 +212,7 @@ export default function App() {
       <section id="contact" style={{ padding: "2.5rem 1rem" }}>
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+        <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
             Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
           </p>
 
@@ -284,7 +262,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Footer with Klarna badge */}
+      {/* Footer */}
       <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center" }}>
         <div style={container}>
           <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
@@ -324,9 +302,7 @@ export default function App() {
                     placeholder="e.g., 350.00"
                   />
                 </label>
-                <button style={btnSolid} onClick={startPayment}>
-                  Continue to payment
-                </button>
+                <button style={btnSolid} onClick={startPayment}>Continue to payment</button>
                 {!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY && (
                   <div style={{ fontSize: 12, color: "#b91c1c" }}>
                     Missing publishable key. Add <code>VITE_STRIPE_PUBLISHABLE_KEY</code> in Netlify → Environment variables.
