@@ -1,12 +1,3 @@
-import React, { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-
-/* Gallery libs */
-import PhotoAlbum from "react-photo-album";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-
 const photos = [
   { src: "/images/gas-station-before-and-after.jpg", width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
   { src: "/images/condo-dirty.jpg", width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
