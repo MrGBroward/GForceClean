@@ -96,7 +96,6 @@ function BeforeAfterGallery() {
     { src: "/images/before-and-after-bulldozer-2.jpg", alt: "Bulldozer before & after" },
     { src: "/images/before-and-after-house-2.jpg", alt: "House before & after" },
   ];
-  // (rest of component unchanged)
 }
 
   return (
