@@ -3,8 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    {
+  
   "scripts": {
     "prebuild": "echo 'Commit:' && git rev-parse HEAD && echo 'Branch:' && git rev-parse --abbrev-ref HEAD && echo '--- App.jsx (first 140 lines) ---' && sed -n '1,140p' src/App.jsx && echo '--- grep for gas-station-before-and-after ---' && (grep -Rni --include='*.{js,jsx,ts,tsx,css,json,md}' 'gas-station-before-and-after' . || true)",
     "build": "vite build"
