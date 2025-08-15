@@ -90,11 +90,28 @@ function Testimonials() {
 /* ---------- Before & After Gallery (rows + lightbox) ---------- */
 function BeforeAfterGallery() {
   const photos = [
-    { src: gasStation, width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
-    { src: condoDirty, width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
-    { src: bulldozer, width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
-    { src: house, width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
+    { src: "/images/gas-station-before-and-after.jpg", width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
+    { src: "/images/condo-dirty.jpg", width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
+    { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
+    { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
   ];
+  const [index, setIndex] = React.useState(-1);
+
+  return (
+    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
+        <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260} onClick={({ index }) => setIndex(index)} />
+        <Lightbox
+          open={index >= 0}
+          close={() => setIndex(-1)}
+          slides={photos.map((p) => ({ src: p.src, alt: p.alt }))}
+        />
+      </div>
+    </section>
+  );
+}
+
   const [index, setIndex] = React.useState(-1);
 
   return (
