@@ -7,11 +7,12 @@ import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-/* Import images so Vite bundles them (ensure these files exist) */
-import gasStation from "./assets/images/gas-station-before-and-after.jpg";
-import condoDirty from "./assets/images/condo-dirty.jpg";
-import bulldozer from "./assets/images/before-and-after-bulldozer-2.jpg";
-import house from "./assets/images/before-and-after-house-2.jpg";
+const photos = [
+  { src: "/images/gas-station-before-and-after.jpg", width: 1600, height: 900, alt: "Gas station pressure cleaning before & after in Broward County" },
+  { src: "/images/condo-dirty.jpg", width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
+  { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
+  { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" }
+];
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
