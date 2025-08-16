@@ -268,12 +268,17 @@ export default function App() {
       <FAQ />
 
       {/* Contact (Netlify Form) */}
-      <section id="contact" style={{ padding: "2.25rem 1rem" }}>
-        <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
-          </p>
+    {/* Contact (Netlify Form) */}
+<section id="contact" style={{ padding: "2.25rem 1rem" }}>
+  <div style={container}>
+    <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
+    <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+      Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+    </p>
+
+    <ContactForm />
+  </div>
+</section>
 
           <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks" style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}>
             <input type="hidden" name="form-name" value="contact" />
