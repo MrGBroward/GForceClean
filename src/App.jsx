@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-
-/* Gallery libs */
 import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-/* Stripe publishable key from Netlify env */
+/* Stripe publishable key (Netlify env) */
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
-/* TODO: replace with your commercial Squarespace URL */
-const COMMERCIAL_URL = "https://www.gforceclean.com/";
+/* Replace with your commercial Squarespace URL */
+const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
 
 /* ---------- helpers ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
@@ -30,39 +28,41 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
 /* ---------- header ---------- */
 function Header() {
   return (
-{/* <ServicesSection /> */}
-<section style={{ padding: "2rem 1rem" }}>
-  <div style={container}>
-    <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
-    <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
-      <li>
-        <a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-          Soft-wash roof cleaning
-        </a>
-      </li>
-      <li>
-        <a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-          House &amp; building wash
-        </a>
-      </li>
-      <li>
-        <a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-          Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)
-        </a>
-      </li>
-      <li>
-        <a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-          HOA &amp; commercial schedules
-        </a>
-      </li>
-      <li>
-        <a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-          Heavy equipment &amp; dumpster pads
-        </a>
-      </li>
-    </ul>
-  </div>
-</section>
+    <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
+      <div style={{ ...container, display: "flex", alignItems: "center", gap: 12, padding: "12px 16px" }}>
+        <img
+          src="/images/logo.png"
+          alt="G-Force Exterior Cleaning"
+          style={{ height: 72, width: "auto", objectFit: "contain" }}
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
+        <div style={{ fontWeight: 800, fontSize: 18 }}>G-Force Exterior Cleaning</div>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
+          <a href="#contact" style={btnMini}>Free Quote</a>
+          <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnMiniOutline}>Commercial</a>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+/* ---------- services ---------- */
+function ServicesSection() {
+  return (
+    <section style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
+        <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
+          <li><a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>Soft-wash roof cleaning</a></li>
+          <li><a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>House &amp; building wash</a></li>
+          <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)</a></li>
+          <li><a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>HOA &amp; commercial schedules</a></li>
+          <li><a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>Heavy equipment &amp; dumpster pads</a></li>
+        </ul>
+      </div>
+    </section>
+  );
+}
 
 /* ---------- testimonials ---------- */
 function Testimonials() {
@@ -122,16 +122,15 @@ function FAQ() {
   );
 }
 
-/* ---------- Gallery (2 columns, public paths only) ---------- */
+/* ---------- gallery (2 columns; public paths) ---------- */
 function BeforeAfterGallery() {
-  // Only include images that actually exist in /public/images/
   const photos = [
-    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo sidewalk before and after cleaning", title: "Condo Sidewalk – Before and After" },
+    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo wall before cleaning", title: "Condo Wall – Before Cleaning" },
     { src: "/images/before-and-after-bulldozer-2.jpg", width: 800, height: 600, alt: "Bulldozer before and after cleaning", title: "Bulldozer – Before & After" },
     { src: "/images/before-and-after-house-2.jpg",     width: 800, height: 600, alt: "House exterior before and after cleaning", title: "House Exterior – Before & After" },
     { src: "/images/gas-station-before-and-after.jpg", width: 800, height: 600, alt: "Gas station before and after cleaning", title: "Gas Station – Before & After" }
   ];
-  const [index, setIndex] = React.useState(-1);
+  const [index, setIndex] = useState(-1);
 
   return (
     <section id="gallery" style={{ padding: "60px 20px", backgroundColor: "#f8f8f8" }}>
@@ -144,7 +143,7 @@ function BeforeAfterGallery() {
         <PhotoAlbum
           layout="columns"
           photos={photos}
-          columns={(w) => (w < 600 ? 1 : 2)}   // 1 column on mobile, 2 on larger screens
+          columns={(w) => (w < 600 ? 1 : 2)}
           spacing={8}
           renderPhoto={({ wrapperStyle, imageProps, photo }) => (
             <div style={{ ...wrapperStyle }}>
@@ -165,7 +164,81 @@ function BeforeAfterGallery() {
   );
 }
 
-/* ---------- Checkout form (Stripe) ---------- */
+/* ---------- contact ---------- */
+function ContactSection() {
+  return (
+    <section id="contact" style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Get Your Free Quote</h2>
+        <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+          Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+        </p>
+
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/thanks"
+          style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p style={{ display: "none" }}>
+            <label>Don’t fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+            <label style={label}>Name<input name="name" required style={input} /></label>
+            <label style={label}>Email<input type="email" name="email" required style={input} /></label>
+          </div>
+
+          <label style={label}>What would you like cleaned?
+            <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+          </label>
+
+          <button type="submit" style={btnSolid}>Send</button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- footer ---------- */
+function Footer() {
+  return (
+    <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
+      <div style={{ ...container, display: "grid", gap: 10 }}>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
+          <img
+            src="/images/veteran-owned.png"
+            alt="Veteran Owned"
+            style={{ height: 40, width: "auto" }}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+          <ImageWithFallback
+            srcs={[
+              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+            ]}
+            alt="Klarna"
+            style={{ height: 32, filter: "invert(1)" }}
+          />
+        </div>
+
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="https://www.facebook.com/yourpage" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Facebook</a>
+          <a href="https://www.instagram.com/yourhandle" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
+          <a href="https://www.google.com/maps?cid=YOUR_GBP_CID" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
+          <a href="https://www.yelp.com/biz/your-yelp-slug" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Yelp</a>
+        </div>
+
+        <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+      </div>
+    </footer>
+  );
+}
+
+/* ---------- checkout (Stripe) ---------- */
 function CheckoutForm({ onClose }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -201,46 +274,8 @@ function CheckoutForm({ onClose }) {
     </form>
   );
 }
-  
-function ServicesSection() {
-  return (
-    <section style={{ padding: "2rem 1rem" }}>
-      <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
 
-        <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
-          <li>
-            <a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-              Soft-wash roof cleaning
-            </a>
-          </li>
-          <li>
-            <a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-              House &amp; building wash
-            </a>
-          </li>
-          <li>
-            <a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-              Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)
-            </a>
-          </li>
-          <li>
-            <a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-              HOA &amp; commercial schedules
-            </a>
-          </li>
-          <li>
-            <a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>
-              Heavy equipment &amp; dumpster pads
-            </a>
-          </li>
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- App ---------- */
+/* ---------- app ---------- */
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -269,16 +304,12 @@ export default function App() {
     <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
       <Header />
 
-      {/* Hero */}
+      {/* hero */}
       <section style={{ padding: "3rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
         <div style={container}>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
-            <img
-              src="/images/veteran-owned.png"
-              alt="Veteran Owned"
-              style={{ height: 48, width: "auto" }}
-              onError={(e) => (e.currentTarget.style.display = "none")}
-            />
+            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 48, width: "auto" }}
+                 onError={(e) => (e.currentTarget.style.display = "none")} />
             <ImageWithFallback
               srcs={[
                 "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
@@ -304,86 +335,14 @@ export default function App() {
         </div>
       </section>
 
-      {/* Services */}
-      <section style={{ padding: "2rem 1rem" }}>
-        <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
-          <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
-            <p style="text-align:center;margin-top:12px;color:#64748b">
-  Service details:
-              
-  <li><a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>Soft-wash roof cleaning</a></li>
-  <li><a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>House &amp; building wash</a></li>
-  <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)</a></li>
-  <li><a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>HOA &amp; commercial schedules</a></li>
-  <li><a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>Heavy equipment &amp; dumpster pads</a></li>
-</ul>
-        </div>
-      </section>
-
+      <ServicesSection />
       <Testimonials />
       <BeforeAfterGallery />
       <FAQ />
+      <ContactSection />
+      <Footer />
 
-      {/* Contact */}
-      <section id="contact" style={{ padding: "2rem 1rem" }}>
-        <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Get Your Free Quote</h2>
-          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
-          </p>
-
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            action="/thanks"
-            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <p style={{ display: "none" }}>
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
-
-            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-              <label style={label}>Name<input name="name" required style={input} /></label>
-              <label style={label}>Email<input type="email" name="email" required style={input} /></label>
-            </div>
-
-            <label style={label}>What would you like cleaned?
-              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-            </label>
-
-            <button type="submit" style={btnSolid}>Send</button>
-          </form>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
-        <div style={{ ...container, display: "grid", gap: 10 }}>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
-            <img
-              src="/images/veteran-owned.png"
-              alt="Veteran Owned"
-              style={{ height: 40, width: "auto" }}
-              onError={(e) => (e.currentTarget.style.display = "none")}
-            />
-            <ImageWithFallback
-              srcs={[
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-              ]}
-              alt="Klarna"
-              style={{ height: 32, filter: "invert(1)" }}
-            />
-          </div>
-          <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-        </div>
-      </footer>
-
-      {/* Modal: Klarna / Stripe */}
+      {/* modal */}
       {showModal && (
         <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
           <div style={modalCard}>
