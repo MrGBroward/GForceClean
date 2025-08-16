@@ -229,7 +229,7 @@ function Footer() {
           <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Facebook</a>
           <a href="https://www.instagram.com/mr.g_pressure_washing" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
           <a href="https://www.google.com/maps?cid=share.google/PqYrtlELAH7X9rXlk" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
-          <a href="https://www.yelp.com/biz/your-yelp-slug" target="_blank" rel="noreferrer" style={{ color:"white", textDecoration:"underline" }}>Yelp</a>
+          <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs-2?osq=g+force+power+washing&override_cta=Get+a+quote"_blank" rel="noreferrer" style={{ color:"white", textDecoration:"underline" }}>Yelp</a>
         </div>
 
         <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
