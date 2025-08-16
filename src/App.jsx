@@ -7,10 +7,13 @@ import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
+/* Stripe publishable key from Netlify env */
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
+
+/* TODO: replace with your commercial Squarespace URL */
 const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
 
-/* helper: image fallback */
+/* ---------- helpers ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
   const [i, setI] = useState(0);
   if (!srcs.length) return null;
@@ -24,7 +27,7 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
   );
 }
 
-/* Header */
+/* ---------- header ---------- */
 function Header() {
   return (
     <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
@@ -45,7 +48,7 @@ function Header() {
   );
 }
 
-/* Testimonials */
+/* ---------- testimonials ---------- */
 function Testimonials() {
   const items = [
     { quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.", name: "Erica P.", role: "Homeowner – Coral Springs" },
@@ -55,7 +58,7 @@ function Testimonials() {
   return (
     <section style={{ padding: "2rem 1rem" }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12 }}>What Clients Say</h2>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>What Clients Say</h2>
         <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {items.map((t, i) => (
             <div key={i} style={{ ...sectionCard, padding: 16 }}>
@@ -69,7 +72,7 @@ function Testimonials() {
   );
 }
 
-/* FAQ */
+/* ---------- FAQ ---------- */
 function FAQ() {
   const qas = [
     { q: "Do you serve all of Broward County?", a: "Yes—most of our work is in Broward, and we cover nearby areas in Miami-Dade and Palm Beach by request." },
@@ -82,7 +85,7 @@ function FAQ() {
   return (
     <section style={{ padding: "2rem 1rem" }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12 }}>Q&amp;A</h2>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Q&amp;A</h2>
         <div style={{ display: "grid", gap: 10 }}>
           {qas.map((item, i) => (
             <div key={i} style={{ ...sectionCard, overflow: "hidden" }}>
@@ -103,38 +106,50 @@ function FAQ() {
   );
 }
 
-/* Gallery (2 columns, uses public paths only) */
+/* ---------- Gallery (2 columns, public paths only) ---------- */
 function BeforeAfterGallery() {
+  // Only include images that actually exist in /public/images/
   const photos = [
-    { src: "/images/condo-dirty.jpg",              width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
-    { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" }
-    // add more when uploaded to /public/images/
+    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo wall before cleaning", title: "Condo Wall – Before Cleaning" },
+    { src: "/images/before-and-after-bulldozer-2.jpg", width: 800, height: 600, alt: "Bulldozer before and after cleaning", title: "Bulldozer – Before & After" },
+    { src: "/images/before-and-after-house-2.jpg",     width: 800, height: 600, alt: "House exterior before and after cleaning", title: "House Exterior – Before & After" },
+    { src: "/images/gas-station-before-and-after.jpg", width: 800, height: 600, alt: "Gas station before and after cleaning", title: "Gas Station – Before & After" }
   ];
   const [index, setIndex] = React.useState(-1);
 
   return (
-    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+    <section id="gallery" style={{ padding: "60px 20px", backgroundColor: "#f8f8f8" }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Before &amp; After</h2>
+        <h2 style={{ ...h2, textAlign: "center", marginBottom: 12 }}>Before &amp; After Gallery</h2>
+        <p style={{ textAlign: "center", maxWidth: 700, margin: "0 auto 28px", fontSize: "1.05rem", color: colors.sub }}>
+          See the difference professional cleaning makes. Every job is done with care, precision, and results you can see immediately.
+        </p>
+
         <PhotoAlbum
           layout="columns"
           photos={photos}
-          columns={(w) => (w < 600 ? 1 : 2)}
+          columns={(w) => (w < 600 ? 1 : 2)}   // 1 column on mobile, 2 on larger screens
           spacing={8}
           renderPhoto={({ wrapperStyle, imageProps, photo }) => (
             <div style={{ ...wrapperStyle }}>
               <img {...imageProps} alt={photo.alt} style={{ width: "100%", height: "auto", borderRadius: 8 }} />
+              <div style={{ fontSize: 13, color: "#6b7280", marginTop: 6, textAlign: "center" }}>{photo.title}</div>
             </div>
           )}
           onClick={({ index }) => setIndex(index)}
         />
-        <Lightbox open={index >= 0} close={() => setIndex(-1)} slides={photos.map(p => ({ src: p.src, alt: p.alt }))} />
+
+        <Lightbox
+          open={index >= 0}
+          close={() => setIndex(-1)}
+          slides={photos.map((p) => ({ src: p.src, alt: p.alt }))}
+        />
       </div>
     </section>
   );
 }
 
-/* Checkout form */
+/* ---------- Checkout form (Stripe) ---------- */
 function CheckoutForm({ onClose }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -171,7 +186,7 @@ function CheckoutForm({ onClose }) {
   );
 }
 
-/* App */
+/* ---------- App ---------- */
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -238,7 +253,7 @@ export default function App() {
       {/* Services */}
       <section style={{ padding: "2rem 1rem" }}>
         <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
+          <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
           <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
             <li>Soft-wash roof cleaning</li>
             <li>House & building wash</li>
@@ -256,35 +271,35 @@ export default function App() {
       {/* Contact */}
       <section id="contact" style={{ padding: "2rem 1rem" }}>
         <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-        <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-          Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
-        </p>
-
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action="/thanks"
-          style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-        >
-          <input type="hidden" name="form-name" value="contact" />
-          <p style={{ display: "none" }}>
-            <label>Don’t fill this out: <input name="bot-field" /></label>
+          <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Get Your Free Quote</h2>
+          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
           </p>
 
-          <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-            <label style={label}>Name<input name="name" required style={input} /></label>
-            <label style={label}>Email<input type="email" name="email" required style={input} /></label>
-          </div>
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/thanks"
+            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <p style={{ display: "none" }}>
+              <label>Don’t fill this out: <input name="bot-field" /></label>
+            </p>
 
-          <label style={label}>What would you like cleaned?
-            <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-          </label>
+            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+              <label style={label}>Name<input name="name" required style={input} /></label>
+              <label style={label}>Email<input type="email" name="email" required style={input} /></label>
+            </div>
 
-          <button type="submit" style={btnSolid}>Send</button>
-        </form>
+            <label style={label}>What would you like cleaned?
+              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+            </label>
+
+            <button type="submit" style={btnSolid}>Send</button>
+          </form>
         </div>
       </section>
 
@@ -311,6 +326,7 @@ export default function App() {
         </div>
       </footer>
 
+      {/* Modal: Klarna / Stripe */}
       {showModal && (
         <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
           <div style={modalCard}>
@@ -345,17 +361,28 @@ export default function App() {
   );
 }
 
-/* styles */
-const colors = { ink:"#0f172a", text:"#0f172a", sub:"#475569", border:"#e2e8f0", borderDark:"#1f2937", accent:"#0f172a", pageBg:"#e5e7eb", cardBg:"#ffffff", panel:"#1f2937" };
-const btnSolid = { background:"#334155", color:"white", border:"none", padding:"12px 16px", borderRadius:12, cursor:"pointer", fontSize:14 };
-const btnOutline = { background:"transparent", color:"white", border:"1px solid #94a3b8", padding:"12px 16px", borderRadius:12, cursor:"pointer", fontSize:14 };
-const btnMini = { background:"#334155", color:"white", border:"none", padding:"8px 12px", borderRadius:10, cursor:"pointer", fontSize:13 };
-const btnMiniOutline = { background:"transparent", color:"white", border:"1px solid #94a3b8", padding:"8px 12px", borderRadius:10, cursor:"pointer", fontSize:13 };
-const h2 = { fontSize:"1.75rem", fontWeight:800, textAlign:"center", margin:0, color:colors.text };
-const container = { maxWidth:980, margin:"0 auto" };
-const sectionCard = { background:colors.cardBg, border:`1px solid ${colors.border}`, borderRadius:16, boxShadow:"0 1px 2px rgba(2,6,23,0.06)" };
-const modalBackdrop = { position:"fixed", inset:0, background:"rgba(0,0,0,0.55)", display:"flex", alignItems:"center", justifyContent:"center", padding:12, zIndex:50 };
-const modalCard = { background:colors.cardBg, borderRadius:16, padding:16, width:"100%", maxWidth:520, boxShadow:"0 12px 30px rgba(2,6,23,0.24)", border:`1px solid ${colors.border}` };
-const xBtn = { background:"transparent", border:"none", cursor:"pointer", fontSize:18, lineHeight:1 };
-const label = { display:"grid", gap:6, fontSize:14, color:colors.text };
-const input = { width:"100%", padding:"10px 12px", borderRadius:12, border:`1px solid ${colors.border}`, background:"#fff", marginTop:4 };
+/* ---------- styles ---------- */
+const colors = {
+  ink: "#0f172a",
+  text: "#0f172a",
+  sub: "#475569",
+  border: "#e2e8f0",
+  borderDark: "#1f2937",
+  accent: "#0f172a",
+  pageBg: "#e5e7eb",
+  cardBg: "#ffffff",
+  panel: "#1f2937"
+};
+
+const btnSolid = { background: "#334155", color: "white", border: "none", padding: "12px 16px", borderRadius: 12, cursor: "pointer", fontSize: 14 };
+const btnOutline = { background: "transparent", color: "white", border: "1px solid #94a3b8", padding: "12px 16px", borderRadius: 12, cursor: "pointer", fontSize: 14 };
+const btnMini = { background: "#334155", color: "white", border: "none", padding: "8px 12px", borderRadius: 10, cursor: "pointer", fontSize: 13 };
+const btnMiniOutline = { background: "transparent", color: "white", border: "1px solid #94a3b8", padding: "8px 12px", borderRadius: 10, cursor: "pointer", fontSize: 13 };
+const h2 = { fontSize: "1.75rem", fontWeight: 800, margin: 0, color: colors.text };
+const container = { maxWidth: 980, margin: "0 auto" };
+const sectionCard = { background: colors.cardBg, border: `1px solid ${colors.border}`, borderRadius: 16, boxShadow: "0 1px 2px rgba(2,6,23,0.06)" };
+const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
+const modalCard = { background: colors.cardBg, borderRadius: 16, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 12px 30px rgba(2,6,23,0.24)", border: `1px solid ${colors.border}` };
+const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
+const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
+const input = { width: "100%", padding: "10px 12px", borderRadius: 12, border: `1px solid ${colors.border}`, background: "#fff", marginTop: 4 };
