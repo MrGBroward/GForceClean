@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+
+/* Gallery libs */
 import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -8,6 +10,7 @@ import "yet-another-react-lightbox/styles.css";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
 
+/* --- helper: image fallback --- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
   const [i, setI] = useState(0);
   if (!srcs.length) return null;
@@ -21,11 +24,17 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
   );
 }
 
+/* --- header --- */
 function Header() {
   return (
     <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
       <div style={{ ...container, display: "flex", alignItems: "center", gap: 12, padding: "12px 16px" }}>
-        <img src="/images/logo.png" alt="G-Force Exterior Cleaning" style={{ height: 72 }} onError={(e)=>e.currentTarget.style.display="none"} />
+        <img
+          src="/images/logo.png"
+          alt="G-Force Exterior Cleaning"
+          style={{ height: 72, width: "auto", objectFit: "contain" }}
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
         <div style={{ fontWeight: 800, fontSize: 18 }}>G-Force Exterior Cleaning</div>
         <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
           <a href="#contact" style={btnMini}>Free Quote</a>
@@ -36,6 +45,7 @@ function Header() {
   );
 }
 
+/* --- testimonials --- */
 function Testimonials() {
   const items = [
     { quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.", name: "Erica P.", role: "Homeowner – Coral Springs" },
@@ -59,6 +69,7 @@ function Testimonials() {
   );
 }
 
+/* --- FAQ --- */
 function FAQ() {
   const qas = [
     { q: "Do you serve all of Broward County?", a: "Yes—most of our work is in Broward, and we cover nearby areas in Miami-Dade and Palm Beach by request." },
@@ -75,11 +86,15 @@ function FAQ() {
         <div style={{ display: "grid", gap: 10 }}>
           {qas.map((item, i) => (
             <div key={i} style={{ ...sectionCard, overflow: "hidden" }}>
-              <button onClick={()=>setOpen(open===i?-1:i)} style={{ width:"100%", textAlign:"left", padding:16, background:"transparent", border:"none", cursor:"pointer", display:"flex", justifyContent:"space-between" }}>
+              <button
+                onClick={() => setOpen(open === i ? -1 : i)}
+                style={{ width: "100%", textAlign: "left", padding: 16, background: "transparent", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+                aria-expanded={open === i}
+              >
                 <span style={{ fontWeight: 600 }}>{item.q}</span>
-                <span style={{ opacity: 0.6 }}>{open===i?"–":"+"}</span>
+                <span style={{ opacity: 0.6 }}>{open === i ? "–" : "+"}</span>
               </button>
-              {open===i && <div style={{ padding:"0 16px 16px 16px", color: colors.sub }}>{item.a}</div>}
+              {open === i && <div style={{ padding: "0 16px 16px 16px", color: colors.sub }}>{item.a}</div>}
             </div>
           ))}
         </div>
@@ -87,29 +102,27 @@ function FAQ() {
     </section>
   );
 }
+
+/* --- Gallery (uses public paths only) --- */
 function BeforeAfterGallery() {
-  // Only include files that exist in public/images/
   const photos = [
     { src: "/images/condo-dirty.jpg",              width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
     { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" }
-    // Add more later when uploaded, e.g.:
-    // { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing" }
+    // add more when uploaded to public/images/
   ];
   const [index, setIndex] = React.useState(-1);
-
   return (
     <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
       <div style={container}>
         <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
-        <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260}
-          onClick={({ index }) => setIndex(index)} />
-        <Lightbox open={index >= 0} close={() => setIndex(-1)}
-          slides={photos.map(p => ({ src: p.src, alt: p.alt }))} />
+        <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260} onClick={({ index }) => setIndex(index)} />
+        <Lightbox open={index >= 0} close={() => setIndex(-1)} slides={photos.map(p => ({ src: p.src, alt: p.alt }))} />
       </div>
     </section>
   );
 }
 
+/* --- main app --- */
 export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -138,17 +151,23 @@ export default function App() {
     <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
       <Header />
 
+      {/* Hero */}
       <section style={{ padding: "3rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
         <div style={container}>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
-            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 48 }} onError={(e)=>e.currentTarget.style.display="none"} />
+            <img
+              src="/images/veteran-owned.png"
+              alt="Veteran Owned"
+              style={{ height: 48, width: "auto" }}
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
             <ImageWithFallback
               srcs={[
                 "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
               ]}
               alt="Klarna"
-              style={{ height: 18 }}
+              style={{ height: 28 }}
             />
           </div>
 
@@ -182,6 +201,7 @@ export default function App() {
       </section>
 
       <Testimonials />
+      <BeforeAfterGallery />
       <FAQ />
 
       {/* Contact */}
@@ -192,44 +212,57 @@ export default function App() {
             Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
           </p>
 
-          <ContactForm />
-        <section id="contact" style={{ padding: "2rem 1rem" }}>
-  <div style={container}>
-    <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-    <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-      Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
-    </p>
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/thanks"
+            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <p style={{ display: "none" }}>
+              <label>Don’t fill this out: <input name="bot-field" /></label>
+            </p>
 
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/thanks"
-      style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-    >
-      <input type="hidden" name="form-name" value="contact" />
-      <p style={{ display: "none" }}>
-        <label>Don’t fill this out: <input name="bot-field" /></label>
-      </p>
+            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+              <label style={label}>Name<input name="name" required style={input} /></label>
+              <label style={label}>Email<input type="email" name="email" required style={input} /></label>
+            </div>
 
-      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-        <label style={label}>Name<input name="name" required style={input} /></label>
-        <label style={label}>Email<input type="email" name="email" required style={input} /></label>
-      </div>
+            <label style={label}>What would you like cleaned?
+              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+            </label>
 
-      <label style={label}>What would you like cleaned?
-        <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-      </label>
+            <button type="submit" style={btnSolid}>Send</button>
+          </form>
+        </div>
+      </section>
 
-      <button type="submit" style={btnSolid}>Send</button>
-    </form>
-  </div>
-</section>
-
+      {/* Footer */}
+      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
+        <div style={{ ...container, display: "grid", gap: 10 }}>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
+            <img
+              src="/images/veteran-owned.png"
+              alt="Veteran Owned"
+              style={{ height: 40, width: "auto" }}
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
+            <ImageWithFallback
+              srcs={[
+                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+              ]}
+              alt="Klarna"
+              style={{ height: 32, filter: "invert(1)" }}
+            />
+          </div>
+          <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+        </div>
       </footer>
 
-      {/* Stripe/Klarna Modal */}
+      {/* Modal */}
       {showModal && (
         <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
           <div style={modalCard}>
@@ -241,7 +274,7 @@ export default function App() {
             {!clientSecret && (
               <div style={{ display: "grid", gap: 10 }}>
                 <label style={label}>Project amount (USD)
-                  <input type="number" step="0.01" min="50" value={amount} onChange={(e)=>setAmount(e.target.value)} style={input} placeholder="e.g., 350.00" />
+                  <input type="number" step="0.01" min="50" value={amount} onChange={(e) => setAmount(e.target.value)} style={input} placeholder="e.g., 350.00" />
                 </label>
                 <button style={btnSolid} onClick={startPayment}>Continue to payment</button>
                 {!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY && (
@@ -264,47 +297,44 @@ export default function App() {
   );
 }
 
-function ContactForm() {
-  const [submitting, setSubmitting] = React.useState(false);
-  const [form, setForm] = React.useState({ name: "", email: "", message: "" });
-
-  const encode = (data) =>
-    Object.keys(data).map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k])).join("&");
+/* --- Stripe checkout form --- */
+function CheckoutForm({ onClose }) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (submitting) return;
+    if (!stripe || !elements) return;
     setSubmitting(true);
-    try {
-      const payload = { "form-name": "contact", name: form.name, email: form.email, message: form.message, "bot-field": "" };
-      const res = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: encode(payload) });
-      if (res.ok) window.location.assign("/thanks");
-      else { alert("Could not submit. Please try again."); setSubmitting(false); }
-    } catch {
-      alert("Network error. Please try again."); setSubmitting(false);
+    setError("");
+
+    const { error: err } = await stripe.confirmPayment({
+      elements,
+      confirmParams: { return_url: window.location.href }
+    });
+
+    if (err) {
+      setError(err.message || "Payment could not be confirmed.");
+      setSubmitting(false);
+    } else {
+      onClose();
     }
   }
 
   return (
-    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={handleSubmit} style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}>
-      <input type="hidden" name="form-name" value="contact" />
-      <p style={{ display: "none" }}><label>Don’t fill this out: <input name="bot-field" onChange={()=>{}} /></label></p>
-
-      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-        <label style={label}>Name<input name="name" required style={input} value={form.name} onChange={(e)=>setForm({ ...form, name: e.target.value })} /></label>
-        <label style={label}>Email<input type="email" name="email" required style={input} value={form.email} onChange={(e)=>setForm({ ...form, email: e.target.value })} /></label>
-      </div>
-
-      <label style={label}>What would you like cleaned?
-        <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} value={form.message} onChange={(e)=>setForm({ ...form, message: e.target.value })} />
-      </label>
-
-      <button type="submit" style={btnSolid} disabled={submitting}>{submitting ? "Sending…" : "Send"}</button>
+    <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
+      <PaymentElement />
+      {error && <div style={{ color: "#b91c1c", fontSize: 13 }}>{error}</div>}
+      <button type="submit" disabled={!stripe || submitting} style={btnSolid}>
+        {submitting ? "Processing…" : "Pay / Apply with Klarna"}
+      </button>
     </form>
   );
 }
 
-/* styles */
+/* --- styles --- */
 const colors = { ink:"#0f172a", text:"#0f172a", sub:"#475569", border:"#e2e8f0", borderDark:"#1f2937", accent:"#0f172a", pageBg:"#e5e7eb", cardBg:"#ffffff", panel:"#1f2937" };
 const btnSolid = { background:"#334155", color:"white", border:"none", padding:"12px 16px", borderRadius:12, cursor:"pointer", fontSize:14 };
 const btnOutline = { background:"transparent", color:"white", border:"1px solid #94a3b8", padding:"12px 16px", borderRadius:12, cursor:"pointer", fontSize:14 };
