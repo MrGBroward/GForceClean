@@ -8,7 +8,7 @@ import "yet-another-react-lightbox/styles.css";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
 /** ====== Replace this with your real Squarespace URL when ready ====== */
-const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
+const COMMERCIAL_URL = "https://www.gforceclean.com/";
 
 /* ---------- tiny helper: image fallback ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
