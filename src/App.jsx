@@ -228,7 +228,6 @@ function Footer() {
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Facebook</a>
           <a href="https://www.instagram.com/mr.g_pressure_washing" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
-          <a href="https://www.google.com/https://https://share.google/EnD8arGj1pS9gZwOs" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
           <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs-2?osq=g+force+power+washing&override_cta=Get+a+quote" target="_blank" rel="noreferrer" style={{ color:"white", textDecoration:"underline" }}>Yelp</a>
         </div>
 
