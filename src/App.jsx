@@ -119,7 +119,7 @@ export default function App() {
       <section style={{ padding: "3rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
         <div style={container}>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
-            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 32 }} onError={(e)=>e.currentTarget.style.display="none"} />
+            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 48 }} onError={(e)=>e.currentTarget.style.display="none"} />
             <ImageWithFallback
               srcs={[
                 "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
