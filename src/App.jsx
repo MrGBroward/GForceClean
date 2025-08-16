@@ -255,12 +255,12 @@ export default function App() {
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
           <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
-            <li>Soft-wash roof cleaning</li>
-            <li>House & building wash</li>
-            <li>Pressure Cleaning – Driveways, sidewalks & pavers (sealing optional)</li>
-            <li>HOA & commercial schedules</li>
-            <li>Heavy equipment & dumpster pads</li>
-          </ul>
+  <li><a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>Soft-wash roof cleaning</a></li>
+  <li><a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>House &amp; building wash</a></li>
+  <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)</a></li>
+  <li><a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>HOA &amp; commercial schedules</a></li>
+  <li><a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>Heavy equipment &amp; dumpster pads</a></li>
+</ul>
         </div>
       </section>
 
