@@ -25,7 +25,7 @@ function Header() {
   return (
     <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
       <div style={{ ...container, display: "flex", alignItems: "center", gap: 12, padding: "12px 16px" }}>
-        <img src="/images/logo.png" alt="G-Force Exterior Cleaning" style={{ height: 44 }} onError={(e)=>e.currentTarget.style.display="none"} />
+        <img src="/images/logo.png" alt="G-Force Exterior Cleaning" style={{ height: 72 }} onError={(e)=>e.currentTarget.style.display="none"} />
         <div style={{ fontWeight: 800, fontSize: 18 }}>G-Force Exterior Cleaning</div>
         <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
           <a href="#contact" style={btnMini}>Free Quote</a>
