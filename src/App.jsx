@@ -201,6 +201,44 @@ function CheckoutForm({ onClose }) {
     </form>
   );
 }
+  
+function ServicesSection() {
+  return (
+    <section style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
+
+        <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
+          <li>
+            <a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+              Soft-wash roof cleaning
+            </a>
+          </li>
+          <li>
+            <a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+              House &amp; building wash
+            </a>
+          </li>
+          <li>
+            <a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+              Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)
+            </a>
+          </li>
+          <li>
+            <a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+              HOA &amp; commercial schedules
+            </a>
+          </li>
+          <li>
+            <a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+              Heavy equipment &amp; dumpster pads
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  );
+}
 
 /* ---------- App ---------- */
 export default function App() {
