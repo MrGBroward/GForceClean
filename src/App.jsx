@@ -30,7 +30,7 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
 /* ---------- header ---------- */
 function Header() {
   return (
-{/* Services */}
+{/* <ServicesSection /> */}
 <section style={{ padding: "2rem 1rem" }}>
   <div style={container}>
     <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
