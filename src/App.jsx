@@ -34,7 +34,6 @@ function Header() {
 <section style={{ padding: "2rem 1rem" }}>
   <div style={container}>
     <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
-
     <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
       <li>
         <a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>
