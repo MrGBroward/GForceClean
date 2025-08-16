@@ -106,21 +106,46 @@ function FAQ() {
 /* --- Gallery (uses public paths only) --- */
 function BeforeAfterGallery() {
   const photos = [
-    { src: "/images/condo-dirty.jpg",              width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
-    { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" }
-    // add more when uploaded to public/images/
-  ];
-  const [index, setIndex] = React.useState(-1);
-  return (
-    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
-      <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
-        <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260} onClick={({ index }) => setIndex(index)} />
-        <Lightbox open={index >= 0} close={() => setIndex(-1)} slides={photos.map(p => ({ src: p.src, alt: p.alt }))} />
-      </div>
-    </section>
-  );
-}
+   /* Gallery images */
+const photos = [
+  {
+    src: "/images/condo-dirty.jpg",
+    width: 1600,
+    height: 900,
+    alt: "Condo exterior cleaning before & after in South Florida"
+  },
+  {
+    src: "/images/before-and-after-house-2.jpg",
+    width: 1600,
+    height: 900,
+    alt: "House pressure washing before & after in Broward County"
+  },
+  {
+    src: "/images/before-and-after-bulldozer-2.jpg",
+    width: 1600,
+    height: 900,
+    alt: "Heavy equipment cleaning before & after - bulldozer"
+  },
+  {
+    src: "/images/driveway-clean.jpg",
+    width: 1600,
+    height: 900,
+    alt: "Driveway pressure cleaning before & after in Coral Springs"
+  },
+  // Add more below in the same format ↓
+  {
+    src: "/images/roof-softwash.jpg",
+    width: 1600,
+    height: 900,
+    alt: "Soft wash roof cleaning before & after in Broward"
+  },
+  {
+    src: "/images/commercial-building.jpg",
+    width: 1600,
+    height: 900,
+    alt: "Commercial property exterior cleaning before & after"
+  }
+];
 
 /* --- main app --- */
 export default function App() {
