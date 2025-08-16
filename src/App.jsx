@@ -185,7 +185,7 @@ export default function App() {
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
               ]}
               alt="Klarna"
-              style={{ height: 32, filter: "invert(1)" }}
+              style={{ height: 40, filter: "invert(1)" }}
             />
           </div>
           <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
