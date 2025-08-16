@@ -110,7 +110,7 @@ function FAQ() {
 function BeforeAfterGallery() {
   // Only include images that actually exist in /public/images/
   const photos = [
-    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo sidewalk before cleaning", title: "Condo Sidewalk – Before Cleaning" },
+    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo sidewalk before and after cleaning", title: "Condo Sidewalk – Before and after Cleaning" },
     { src: "/images/before-and-after-bulldozer-2.jpg", width: 800, height: 600, alt: "Bulldozer before and after cleaning", title: "Bulldozer – Before & After" },
     { src: "/images/before-and-after-house-2.jpg",     width: 800, height: 600, alt: "House exterior before and after cleaning", title: "House Exterior – Before & After" },
     { src: "/images/gas-station-before-and-after.jpg", width: 800, height: 600, alt: "Gas station before and after cleaning", title: "Gas Station – Before & After" }
