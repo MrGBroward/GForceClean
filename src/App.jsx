@@ -193,25 +193,40 @@ export default function App() {
           </p>
 
           <ContactForm />
-        </div>
-      </section>
+        <section id="contact" style={{ padding: "2rem 1rem" }}>
+  <div style={container}>
+    <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
+    <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+      Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+    </p>
 
-      {/* Footer */}
-      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
-        <div style={{ ...container, display: "grid", gap: 10 }}>
-          <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
-            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 26 }} onError={(e)=>e.currentTarget.style.display="none"} />
-            <ImageWithFallback
-              srcs={[
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-              ]}
-              alt="Klarna"
-              style={{ height: 40, filter: "invert(1)" }}
-            />
-          </div>
-          <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-        </div>
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/thanks"
+      style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p style={{ display: "none" }}>
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+        <label style={label}>Name<input name="name" required style={input} /></label>
+        <label style={label}>Email<input type="email" name="email" required style={input} /></label>
+      </div>
+
+      <label style={label}>What would you like cleaned?
+        <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+      </label>
+
+      <button type="submit" style={btnSolid}>Send</button>
+    </form>
+  </div>
+</section>
+
       </footer>
 
       {/* Stripe/Klarna Modal */}
