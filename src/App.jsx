@@ -8,9 +8,9 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
-const COMMERCIAL_URL = "https://www.gforceclean.com/";
+const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
 
-/* --- helper: image fallback --- */
+/* helper: image fallback */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
   const [i, setI] = useState(0);
   if (!srcs.length) return null;
@@ -24,7 +24,7 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
   );
 }
 
-/* --- header --- */
+/* Header */
 function Header() {
   return (
     <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
@@ -45,7 +45,7 @@ function Header() {
   );
 }
 
-/* --- testimonials --- */
+/* Testimonials */
 function Testimonials() {
   const items = [
     { quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.", name: "Erica P.", role: "Homeowner – Coral Springs" },
@@ -69,7 +69,7 @@ function Testimonials() {
   );
 }
 
-/* --- FAQ --- */
+/* FAQ */
 function FAQ() {
   const qas = [
     { q: "Do you serve all of Broward County?", a: "Yes—most of our work is in Broward, and we cover nearby areas in Miami-Dade and Palm Beach by request." },
@@ -103,51 +103,76 @@ function FAQ() {
   );
 }
 
-/* --- Gallery (uses public paths only) --- */
+/* Gallery (2 columns, uses public paths only) */
 function BeforeAfterGallery() {
-   /* Gallery images */
-const photos = [
-  {
-    src: "/images/condo-dirty.jpg",
-    width: 1600,
-    height: 900,
-    alt: "Condo exterior cleaning before & after in South Florida"
-  },
-  {
-    src: "/images/before-and-after-house-2.jpg",
-    width: 1600,
-    height: 900,
-    alt: "House pressure washing before & after in Broward County"
-  },
-  {
-    src: "/images/before-and-after-bulldozer-2.jpg",
-    width: 1600,
-    height: 900,
-    alt: "Heavy equipment cleaning before & after - bulldozer"
-  },
-  {
-    src: "/images/driveway-clean.jpg",
-    width: 1600,
-    height: 900,
-    alt: "Driveway pressure cleaning before & after in Coral Springs"
-  },
-  // Add more below in the same format ↓
-  {
-    src: "/images/roof-softwash.jpg",
-    width: 1600,
-    height: 900,
-    alt: "Soft wash roof cleaning before & after in Broward"
-  },
-  {
-    src: "/images/commercial-building.jpg",
-    width: 1600,
-    height: 900,
-    alt: "Commercial property exterior cleaning before & after"
-  }
-];
+  const photos = [
+    { src: "/images/condo-dirty.jpg",              width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
+    { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" }
+    // add more when uploaded to /public/images/
+  ];
+  const [index, setIndex] = React.useState(-1);
 
-/* --- main app --- */
- function App() {
+  return (
+    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Before &amp; After</h2>
+        <PhotoAlbum
+          layout="columns"
+          photos={photos}
+          columns={(w) => (w < 600 ? 1 : 2)}
+          spacing={8}
+          renderPhoto={({ wrapperStyle, imageProps, photo }) => (
+            <div style={{ ...wrapperStyle }}>
+              <img {...imageProps} alt={photo.alt} style={{ width: "100%", height: "auto", borderRadius: 8 }} />
+            </div>
+          )}
+          onClick={({ index }) => setIndex(index)}
+        />
+        <Lightbox open={index >= 0} close={() => setIndex(-1)} slides={photos.map(p => ({ src: p.src, alt: p.alt }))} />
+      </div>
+    </section>
+  );
+}
+
+/* Checkout form */
+function CheckoutForm({ onClose }) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+    setSubmitting(true);
+    setError("");
+
+    const { error: err } = await stripe.confirmPayment({
+      elements,
+      confirmParams: { return_url: window.location.href }
+    });
+
+    if (err) {
+      setError(err.message || "Payment could not be confirmed.");
+      setSubmitting(false);
+    } else {
+      onClose();
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
+      <PaymentElement />
+      {error && <div style={{ color: "#b91c1c", fontSize: 13 }}>{error}</div>}
+      <button type="submit" disabled={!stripe || submitting} style={btnSolid}>
+        {submitting ? "Processing…" : "Pay / Apply with Klarna"}
+      </button>
+    </form>
+  );
+}
+
+/* App */
+export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [amount, setAmount] = useState("350.00");
@@ -232,34 +257,34 @@ const photos = [
       <section id="contact" style={{ padding: "2rem 1rem" }}>
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+        <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+          Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+        </p>
+
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/thanks"
+          style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p style={{ display: "none" }}>
+            <label>Don’t fill this out: <input name="bot-field" /></label>
           </p>
 
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            action="/thanks"
-            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <p style={{ display: "none" }}>
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
+          <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+            <label style={label}>Name<input name="name" required style={input} /></label>
+            <label style={label}>Email<input type="email" name="email" required style={input} /></label>
+          </div>
 
-            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-              <label style={label}>Name<input name="name" required style={input} /></label>
-              <label style={label}>Email<input type="email" name="email" required style={input} /></label>
-            </div>
+          <label style={label}>What would you like cleaned?
+            <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+          </label>
 
-            <label style={label}>What would you like cleaned?
-              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-            </label>
-
-            <button type="submit" style={btnSolid}>Send</button>
-          </form>
+          <button type="submit" style={btnSolid}>Send</button>
+        </form>
         </div>
       </section>
 
@@ -286,7 +311,6 @@ const photos = [
         </div>
       </footer>
 
-      {/* Modal */}
       {showModal && (
         <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
           <div style={modalCard}>
@@ -321,44 +345,7 @@ const photos = [
   );
 }
 
-/* --- Stripe checkout form --- */
-function CheckoutForm({ onClose }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-    setSubmitting(true);
-    setError("");
-
-    const { error: err } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: window.location.href }
-    });
-
-    if (err) {
-      setError(err.message || "Payment could not be confirmed.");
-      setSubmitting(false);
-    } else {
-      onClose();
-    }
-  }
-
-  return (
-    <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
-      <PaymentElement />
-      {error && <div style={{ color: "#b91c1c", fontSize: 13 }}>{error}</div>}
-      <button type="submit" disabled={!stripe || submitting} style={btnSolid}>
-        {submitting ? "Processing…" : "Pay / Apply with Klarna"}
-      </button>
-    </form>
-  );
-}
-
-/* --- styles --- */
+/* styles */
 const colors = { ink:"#0f172a", text:"#0f172a", sub:"#475569", border:"#e2e8f0", borderDark:"#1f2937", accent:"#0f172a", pageBg:"#e5e7eb", cardBg:"#ffffff", panel:"#1f2937" };
 const btnSolid = { background:"#334155", color:"white", border:"none", padding:"12px 16px", borderRadius:12, cursor:"pointer", fontSize:14 };
 const btnOutline = { background:"transparent", color:"white", border:"1px solid #94a3b8", padding:"12px 16px", borderRadius:12, cursor:"pointer", fontSize:14 };
