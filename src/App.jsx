@@ -255,6 +255,15 @@ export default function App() {
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
           <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
+            <p style="text-align:center;margin-top:12px;color:#64748b">
+  Service details: 
+  <a href="/services/soft-wash-roof-cleaning.html">Soft-wash Roof Cleaning</a> · 
+  <a href="/services/house-and-building-wash.html">House &amp; Building Wash</a> · 
+  <a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html">Driveways, Sidewalks &amp; Pavers</a> · 
+  <a href="/services/hoa-and-commercial-schedules.html">HOA &amp; Commercial Schedules</a> · 
+  <a href="/services/heavy-equipment-and-dumpster-pads.html">Heavy Equipment &amp; Dumpster Pads</a>
+</p>
+
   <li><a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>Soft-wash roof cleaning</a></li>
   <li><a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>House &amp; building wash</a></li>
   <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)</a></li>
