@@ -147,7 +147,7 @@ const photos = [
 ];
 
 /* --- main app --- */
-export default function App() {
+ function App() {
   const [showModal, setShowModal] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [amount, setAmount] = useState("350.00");
