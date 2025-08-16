@@ -7,7 +7,10 @@ import "yet-another-react-lightbox/styles.css";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
-/* ---------- tiny helper: image fallback (for Klarna logo) ---------- */
+/** ====== Replace this with your real Squarespace URL when ready ====== */
+const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
+
+/* ---------- tiny helper: image fallback ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
   const [i, setI] = useState(0);
   if (!srcs.length) return null;
@@ -18,6 +21,28 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
       style={style}
       onError={() => setI((prev) => (prev + 1 < srcs.length ? prev + 1 : prev))}
     />
+  );
+}
+
+/* ---------- Header with logo ---------- */
+function Header() {
+  return (
+    <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
+      <div style={{ ...container, display: "flex", alignItems: "center", gap: 12, padding: "12px 16px" }}>
+        {/* Your logo (upload to public/images/logo.png) */}
+        <img
+          src="/images/logo.png"
+          alt="G-Force Exterior Cleaning"
+          style={{ height: 44, width: "auto", objectFit: "contain" }}
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
+        <div style={{ fontWeight: 800, fontSize: 18 }}>G-Force Exterior Cleaning</div>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
+          <a href="#contact" style={btnMini}>Free Quote</a>
+          <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnMiniOutline}>Commercial</a>
+        </div>
+      </div>
+    </header>
   );
 }
 
@@ -53,9 +78,9 @@ function Testimonials() {
   );
 }
 
-/* ---------- Before & After Gallery (uses public paths; no imports) ---------- */
+/* ---------- Before & After Gallery (no duplicates; uses /public/images) ---------- */
 function BeforeAfterGallery() {
-  // Only include images that exist in public/images/ right now
+  // Only include images you actually have in public/images/
   const photos = [
     { src: "/images/condo-dirty.jpg",              width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
     { src: "/images/before-and-after-house-2.jpg", width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
@@ -65,13 +90,86 @@ function BeforeAfterGallery() {
   const [index, setIndex] = React.useState(-1);
 
   return (
-    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+    <section style={{ padding: "2.5rem 1rem", background: colors.panel }}>
       <div style={container}>
         <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
         <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260} onClick={({ index }) => setIndex(index)} />
         <Lightbox open={index >= 0} close={() => setIndex(-1)} slides={photos.map((p) => ({ src: p.src, alt: p.alt }))} />
       </div>
     </section>
+  );
+}
+
+/* ---------- FAQ / Q&A (accordion) ---------- */
+function FAQ() {
+  const qas = [
+    {
+      q: "Do you serve all of Broward County?",
+      a: "Yes—most of our work is in Broward, but we also cover nearby areas in Miami-Dade and Palm Beach by request."
+    },
+    {
+      q: "Is pressure cleaning safe for my roof and plants?",
+      a: "We use a soft-wash approach for roofs and pre-wet landscaping to protect plants. We also rinse surfaces thoroughly."
+    },
+    {
+      q: "Can you schedule early mornings or weekends?",
+      a: "Absolutely. We work around traffic and business hours—early mornings, weekends, or off-peak times."
+    },
+    {
+      q: "Do you offer financing?",
+      a: "Yes. Through Klarna via Stripe. Choose 'Finance with Klarna' on this page to apply."
+    },
+    {
+      q: "Do you handle commercial/HOA properties?",
+      a: "Yes. We offer long-term and multi-site schedules with flexible pricing and photo documentation."
+    }
+  ];
+  const [open, setOpen] = useState(-1);
+
+  return (
+    <section style={{ padding: "2.5rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12 }}>Q&A</h2>
+        <div style={{ display: "grid", gap: 10 }}>
+          {qas.map((item, i) => (
+            <div key={i} style={{ ...sectionCard, overflow: "hidden" }}>
+              <button
+                onClick={() => setOpen(open === i ? -1 : i)}
+                style={{ width: "100%", textAlign: "left", padding: 16, background: "transparent", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                aria-expanded={open === i}
+              >
+                <span style={{ fontWeight: 600 }}>{item.q}</span>
+                <span style={{ opacity: 0.6 }}>{open === i ? "–" : "+"}</span>
+              </button>
+              {open === i && (
+                <div style={{ padding: "0 16px 16px 16px", color: colors.sub }}>
+                  {item.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Social Links ---------- */
+function SocialLinks() {
+  const links = [
+    { href: "https://facebook.com/", label: "Facebook" },
+    { href: "https://instagram.com/", label: "Instagram" },
+    { href: "https://www.google.com/maps", label: "Google" },
+    { href: "https://yelp.com/", label: "Yelp" },
+  ];
+  return (
+    <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+      {links.map((l) => (
+        <a key={l.label} href={l.href} target="_blank" rel="noreferrer" style={{ color: "white", opacity: 0.9 }}>
+          {l.label}
+        </a>
+      ))}
+    </div>
   );
 }
 
@@ -101,33 +199,46 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
+      <Header />
+
       {/* Hero */}
-      <section style={{ padding: "4rem 1rem", background: "linear-gradient(180deg, #eef2ff 0%, #f8fafc 50%, #f1f5f9 100%)", borderBottom: `1px solid ${colors.border}` }}>
+      <section style={{ padding: "3.25rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
         <div style={container}>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800, color: colors.ink }}>G-Force Exterior Cleaning</h1>
-          <p style={{ fontSize: "1.1rem", maxWidth: 840, margin: "0 auto", color: colors.sub }}>
-            <strong>G-Force Exterior Cleaning Services</strong> provides professional <strong>pressure cleaning in Broward County</strong> and the surrounding South Florida area. We help homes, HOAs, and commercial properties look their best while protecting roofs, paint, and landscaping. Our services include pressure washing driveways, roof cleaning, and full exterior cleaning. We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo documentation, and results you can see.
-          </p>
-          <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
+            {/* Veteran Owned badge (upload to public/images/veteran-owned.png) */}
+            <img
+              src="/images/veteran-owned.png"
+              alt="Veteran Owned"
+              style={{ height: 32, width: "auto" }}
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
             <ImageWithFallback
               srcs={[
                 "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
               ]}
               alt="Klarna"
-              style={{ height: 22 }}
+              style={{ height: 18 }}
             />
-            <span style={{ fontSize: 12, color: colors.sub }}>*Subject to approval. Terms from Klarna.</span>
           </div>
-          <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#contact" style={btnSolid}>Call for a quote</a>
+
+          <h1 style={{ fontSize: "2.25rem", marginBottom: "0.5rem", fontWeight: 800, color: "white", textAlign: "center" }}>
+            G-Force Exterior Cleaning
+          </h1>
+          <p style={{ fontSize: "1.05rem", maxWidth: 880, margin: "0 auto", color: "#cbd5e1", textAlign: "center" }}>
+            <strong>G-Force Exterior Cleaning Services</strong> provides professional <strong>pressure cleaning in Broward County</strong> and the surrounding South Florida area. We help homes, HOAs, and commercial properties look their best while protecting roofs, paint, and landscaping. Our services include pressure washing driveways, roof cleaning, and full exterior cleaning. We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo documentation, and results you can see.
+          </p>
+
+          <div style={{ marginTop: 18, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#contact" style={btnSolid}>Free Quote</a>
             <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
+            <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnOutline}>Commercial Services</a>
           </div>
         </div>
       </section>
 
       {/* About */}
-      <section style={{ padding: "2.5rem 1rem" }}>
+      <section style={{ padding: "2.25rem 1rem" }}>
         <div style={{ ...container, ...sectionCard, padding: 16 }}>
           <h2 style={{ ...h2, marginBottom: 8 }}>About G-Force</h2>
           <p style={{ color: colors.sub, margin: 0 }}>
@@ -138,8 +249,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* Services (no bold on “Pressure Cleaning – Driveways”) */}
-      <section style={{ padding: "2.5rem 1rem" }}>
+      {/* Services */}
+      <section style={{ padding: "2.25rem 1rem" }}>
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
           <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
@@ -154,9 +265,10 @@ export default function App() {
 
       <Testimonials />
       <BeforeAfterGallery />
+      <FAQ />
 
       {/* Contact (Netlify Form) */}
-      <section id="contact" style={{ padding: "2.5rem 1rem" }}>
+      <section id="contact" style={{ padding: "2.25rem 1rem" }}>
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
           <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
@@ -192,22 +304,33 @@ export default function App() {
         </div>
       </section>
 
-      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center" }}>
-        <div style={container}>
-          <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+      {/* Footer with Veteran + Social */}
+      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
+        <div style={{ ...container, display: "grid", gap: 10 }}>
+          <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
+            <img
+              src="/images/veteran-owned.png"
+              alt="Veteran Owned"
+              style={{ height: 26, width: "auto" }}
+              onError={(e) => (e.currentTarget.style.display = "none")}
+            />
             <ImageWithFallback
               srcs={[
                 "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
               ]}
               alt="Klarna"
-              style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
+              style={{ height: 20, filter: "invert(1)" }}
             />
           </div>
+
+          <SocialLinks />
+
+          <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
         </div>
       </footer>
 
+      {/* Stripe/Klarna Modal */}
       {showModal && (
         <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
           <div style={modalCard}>
@@ -280,14 +403,96 @@ function CheckoutForm({ onClose }) {
 }
 
 /* ---------- styles ---------- */
-const colors = { ink: "#0f172a", text: "#0f172a", sub: "#475569", border: "#e2e8f0", accent: "#0f172a", pageBg: "#f1f5f9", cardBg: "#ffffff" };
-const btnSolid = { background: colors.accent, color: "white", border: "none", padding: "12px 16px", borderRadius: 12, cursor: "pointer", fontSize: 14 };
-const btnOutline = { background: "transparent", color: colors.accent, border: `1px solid ${colors.border}`, padding: "12px 16px", borderRadius: 12, cursor: "pointer", fontSize: 14 };
-const h2 = { fontSize: "1.75rem", fontWeight: 800, textAlign: "center", margin: 0, color: colors.text };
-const container = { maxWidth: 960, margin: "0 auto" };
-const sectionCard = { background: colors.cardBg, border: `1px solid ${colors.border}`, borderRadius: 16, boxShadow: "0 1px 2px rgba(2,6,23,0.06)" };
-const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
-const modalCard = { background: colors.cardBg, borderRadius: 16, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 12px 30px rgba(2,6,23,0.24)", border: `1px solid ${colors.border}` };
+const colors = {
+  ink: "#0f172a",
+  text: "#0f172a",
+  sub: "#475569",
+  border: "#e2e8f0",
+  borderDark: "#1f2937",
+  accent: "#0f172a",
+  pageBg: "#e5e7eb",   // darker gray background
+  cardBg: "#ffffff",
+  panel: "#1f2937"     // dark hero/panel background
+};
+
+const btnSolid = {
+  background: "#334155",
+  color: "white",
+  border: "none",
+  padding: "12px 16px",
+  borderRadius: 12,
+  cursor: "pointer",
+  fontSize: 14,
+};
+
+const btnOutline = {
+  background: "transparent",
+  color: "white",
+  border: `1px solid #94a3b8`,
+  padding: "12px 16px",
+  borderRadius: 12,
+  cursor: "pointer",
+  fontSize: 14,
+};
+
+const btnMini = {
+  background: "#334155",
+  color: "white",
+  border: "none",
+  padding: "8px 12px",
+  borderRadius: 10,
+  cursor: "pointer",
+  fontSize: 13,
+};
+
+const btnMiniOutline = {
+  background: "transparent",
+  color: "white",
+  border: `1px solid #94a3b8`,
+  padding: "8px 12px",
+  borderRadius: 10,
+  cursor: "pointer",
+  fontSize: 13,
+};
+
+const h2 = {
+  fontSize: "1.75rem",
+  fontWeight: 800,
+  textAlign: "center",
+  margin: 0,
+  color: colors.text,
+};
+
+const container = { maxWidth: 980, margin: "0 auto" };
+
+const sectionCard = {
+  background: colors.cardBg,
+  border: `1px solid ${colors.border}`,
+  borderRadius: 16,
+  boxShadow: "0 1px 2px rgba(2,6,23,0.06)",
+};
+
+const modalBackdrop = {
+  position: "fixed",
+  inset: 0,
+  background: "rgba(0,0,0,0.55)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 12,
+  zIndex: 50,
+};
+
+const modalCard = {
+  background: colors.cardBg,
+  borderRadius: 16,
+  padding: 16,
+  width: "100%",
+  maxWidth: 520,
+  boxShadow: "0 12px 30px rgba(2,6,23,0.24)",
+  border: `1px solid ${colors.border}`,
+};
+
 const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
 const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
 const input = { width: "100%", padding: "10px 12px", borderRadius: 12, border: `1px solid ${colors.border}`, background: "#fff", marginTop: 4 };
