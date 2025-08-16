@@ -105,7 +105,6 @@ function FAQ() {
 
 /* --- Gallery (uses public paths only) --- */
 function BeforeAfterGallery() {
-  const photos = [
    /* Gallery images */
 const photos = [
   {
