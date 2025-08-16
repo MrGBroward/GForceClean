@@ -11,7 +11,7 @@ import "yet-another-react-lightbox/styles.css";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
 /* TODO: replace with your commercial Squarespace URL */
-const COMMERCIAL_URL = "https://www.getpressurecleaningbroward.com/";
+const COMMERCIAL_URL = "https://www.gforceclean.com/";
 
 /* ---------- helpers ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
