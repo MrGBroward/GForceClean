@@ -361,6 +361,110 @@ export default function App() {
             {clientSecret && (
               <Elements stripe={stripePromise} options={options}>
                 <CheckoutForm onClose={() => setShowModal(false)} />
+                function ContactForm() {
+  const [submitting, setSubmitting] = React.useState(false);
+  const [form, setForm] = React.useState({ name: "", email: "", message: "" });
+
+  // Encode for application/x-www-form-urlencoded
+  const encode = (data) =>
+    Object.keys(data)
+      .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+
+    try {
+      const payload = {
+        "form-name": "contact", // must match the form's name
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        "bot-field": ""
+      };
+
+      // Post to root so Netlify captures it, then you redirect to /thanks
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode(payload)
+      });
+
+      if (res.ok) {
+        window.location.assign("/thanks");
+      } else {
+        alert("Could not submit. Please try again.");
+        setSubmitting(false);
+      }
+    } catch (err) {
+      alert("Network error. Please try again.");
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+    >
+      {/* Hidden input must match form name */}
+      <input type="hidden" name="form-name" value="contact" />
+      {/* Honeypot field for Netlify bots (kept hidden from humans) */}
+      <p style={{ display: "none" }}>
+        <label>Don’t fill this out: <input name="bot-field" onChange={() => {}} /></label>
+      </p>
+
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+        <label style={label}>
+          Name
+          <input
+            name="name"
+            required
+            style={input}
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+        </label>
+        <label style={label}>
+          Email
+          <input
+            type="email"
+            name="email"
+            required
+            style={input}
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+          />
+        </label>
+      </div>
+
+      <label style={label}>
+        What would you like cleaned?
+        <textarea
+          name="message"
+          rows={4}
+          required
+          style={{ ...input, resize: "vertical" }}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+        />
+      </label>
+
+      <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+        <button type="submit" style={btnSolid} disabled={submitting}>
+          {submitting ? "Sending…" : "Send"}
+        </button>
+      </div>
+    </form>
+  );
+}
+
               </Elements>
             )}
           </div>
