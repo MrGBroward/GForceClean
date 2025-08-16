@@ -30,23 +30,41 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
 /* ---------- header ---------- */
 function Header() {
   return (
-    <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
-      <div style={{ ...container, display: "flex", alignItems: "center", gap: 12, padding: "12px 16px" }}>
-        <img
-          src="/images/logo.png"
-          alt="G-Force Exterior Cleaning"
-          style={{ height: 72, width: "auto", objectFit: "contain" }}
-          onError={(e) => (e.currentTarget.style.display = "none")}
-        />
-        <div style={{ fontWeight: 800, fontSize: 18 }}>G-Force Exterior Cleaning</div>
-        <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
-          <a href="#contact" style={btnMini}>Free Quote</a>
-          <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnMiniOutline}>Commercial</a>
-        </div>
-      </div>
-    </header>
-  );
-}
+{/* Services */}
+<section style={{ padding: "2rem 1rem" }}>
+  <div style={container}>
+    <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
+
+    <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
+      <li>
+        <a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+          Soft-wash roof cleaning
+        </a>
+      </li>
+      <li>
+        <a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+          House &amp; building wash
+        </a>
+      </li>
+      <li>
+        <a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+          Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)
+        </a>
+      </li>
+      <li>
+        <a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+          HOA &amp; commercial schedules
+        </a>
+      </li>
+      <li>
+        <a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>
+          Heavy equipment &amp; dumpster pads
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+
 
 /* ---------- testimonials ---------- */
 function Testimonials() {
