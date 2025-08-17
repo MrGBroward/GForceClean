@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-
-/* Gallery libs */
 import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-/* Import images so Vite bundles them */
-import gasStation from "./assets/images/gas-station-before-and-after.jpg";
-import condoDirty from "./assets/images/condo-dirty.jpg";
-import bulldozer from "./assets/images/before-and-after-bulldozer-2.jpg";
-import house from "./assets/images/before-and-after-house-2.jpg";
-
+/* Stripe publishable key (Netlify env) */
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
-/* ---------- tiny helper: image fallback (for Klarna logo reliability) ---------- */
+/* Replace with your commercial Squarespace URL */
+const COMMERCIAL_URL = "https://www.gforceclean.com/";
+
+/* ---------- helpers ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
   const [i, setI] = useState(0);
   if (!srcs.length) return null;
@@ -29,55 +25,61 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
   );
 }
 
-/* ---------- Testimonials ---------- */
+/* ---------- header ---------- */
+function Header() {
+  return (
+    <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
+      <div style={{ ...container, display: "flex", alignItems: "center", gap: 12, padding: "12px 16px" }}>
+        <img
+          src="/images/logo.png"
+          alt="G-Force Exterior Cleaning"
+          style={{ height: 72, width: "auto", objectFit: "contain" }}
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
+        <div style={{ fontWeight: 800, fontSize: 18 }}>G-Force Exterior Cleaning</div>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 10 }}>
+          <a href="#contact" style={btnMini}>Free Quote</a>
+          <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnMiniOutline}>Commercial</a>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+/* ---------- services ---------- */
+function ServicesSection() {
+  return (
+    <section style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
+        <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
+          <li><a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>Soft-wash roof cleaning</a></li>
+          <li><a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>House &amp; building wash</a></li>
+          <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)</a></li>
+          <li><a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>HOA &amp; commercial schedules</a></li>
+          <li><a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>Heavy equipment &amp; dumpster pads</a></li>
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- testimonials ---------- */
 function Testimonials() {
   const items = [
-    {
-      quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.",
-      name: "Erica P.",
-      role: "Homeowner – Coral Springs",
-      photo: "https://i.imgur.com/6VBx3io.png"
-    },
-    {
-      quote: "Reliable, fast, and professional. Perfect for HOA common areas and sidewalks.",
-      name: "David R.",
-      role: "HOA Board Member – Pembroke Pines",
-      photo: "https://i.imgur.com/6VBx3io.png"
-    },
-    {
-      quote: "Our storefront shines after every service. Customers noticed immediately.",
-      name: "Monique L.",
-      role: "Retail Manager – Fort Lauderdale",
-      photo: "https://i.imgur.com/6VBx3io.png"
-    }
+    { quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.", name: "Erica P.", role: "Homeowner – Coral Springs" },
+    { quote: "Reliable, fast, and professional. Perfect for HOA common areas and sidewalks.", name: "David R.", role: "HOA Board Member – Pembroke Pines" },
+    { quote: "Our storefront shines after every service. Customers noticed immediately.", name: "Monique L.", role: "Retail Manager – Fort Lauderdale" }
   ];
-
   return (
-    <section style={{ padding: "2.5rem 1rem" }}>
+    <section style={{ padding: "2rem 1rem" }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12 }}>What Clients Say</h2>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>What Clients Say</h2>
         <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
           {items.map((t, i) => (
             <div key={i} style={{ ...sectionCard, padding: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    border: `1px solid ${colors.border}`,
-                    flexShrink: 0
-                  }}
-                >
-                  <img src={t.photo} alt={t.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700 }}>{t.name}</div>
-                  <div style={{ fontSize: 12, color: colors.sub }}>{t.role}</div>
-                </div>
-              </div>
-              <p style={{ color: colors.sub, margin: 0 }}>&ldquo;{t.quote}&rdquo;</p>
+              <p style={{ margin: 0, color: colors.sub }}>&ldquo;{t.quote}&rdquo;</p>
+              <div style={{ marginTop: 8, fontSize: 12, color: colors.sub }}>{t.name} — {t.role}</div>
             </div>
           ))}
         </div>
@@ -86,21 +88,72 @@ function Testimonials() {
   );
 }
 
-/* ---------- Before & After Gallery (rows + lightbox) ---------- */
+/* ---------- FAQ ---------- */
+function FAQ() {
+  const qas = [
+    { q: "Do you serve all of Broward County?", a: "Yes—most of our work is in Broward, and we cover nearby areas in Miami-Dade and Palm Beach by request." },
+    { q: "Is pressure cleaning safe for my roof and plants?", a: "We use a soft-wash approach for roofs and pre-wet landscaping to protect plants. We also rinse surfaces thoroughly." },
+    { q: "Can you schedule early mornings or weekends?", a: "Absolutely. We work around traffic and business hours—early mornings, weekends, or off-peak times." },
+    { q: "Do you offer financing?", a: "Yes. Through Klarna via Stripe. Choose 'Finance with Klarna' on this page to apply." },
+    { q: "Do you handle commercial/HOA properties?", a: "Yes. We offer long-term and multi-site schedules with flexible pricing and photo documentation." }
+  ];
+  const [open, setOpen] = useState(-1);
+  return (
+    <section style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Q&amp;A</h2>
+        <div style={{ display: "grid", gap: 10 }}>
+          {qas.map((item, i) => (
+            <div key={i} style={{ ...sectionCard, overflow: "hidden" }}>
+              <button
+                onClick={() => setOpen(open === i ? -1 : i)}
+                style={{ width: "100%", textAlign: "left", padding: 16, background: "transparent", border: "none", cursor: "pointer", display: "flex", justifyContent: "space-between" }}
+                aria-expanded={open === i}
+              >
+                <span style={{ fontWeight: 600 }}>{item.q}</span>
+                <span style={{ opacity: 0.6 }}>{open === i ? "–" : "+"}</span>
+              </button>
+              {open === i && <div style={{ padding: "0 16px 16px 16px", color: colors.sub }}>{item.a}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- gallery (2 columns; public paths) ---------- */
 function BeforeAfterGallery() {
   const photos = [
-    { src: gasStation, width: 1600, height: 900, alt: "Gas station before & after" },
-    { src: condoDirty, width: 1600, height: 900, alt: "Condo dirty vs cleaned" },
-    { src: bulldozer, width: 1600, height: 900, alt: "Bulldozer before & after" },
-    { src: house, width: 1600, height: 900, alt: "House before & after" },
+    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo wall before cleaning", title: "Condo Wall – Before Cleaning" },
+    { src: "/images/before-and-after-bulldozer-2.jpg", width: 800, height: 600, alt: "Bulldozer before and after cleaning", title: "Bulldozer – Before & After" },
+    { src: "/images/before-and-after-house-2.jpg",     width: 800, height: 600, alt: "House exterior before and after cleaning", title: "House Exterior – Before & After" },
+    { src: "/images/gas-station-before-and-after.jpg", width: 800, height: 600, alt: "Gas station before and after cleaning", title: "Gas Station – Before & After" }
   ];
-  const [index, setIndex] = React.useState(-1);
+  const [index, setIndex] = useState(-1);
 
   return (
-    <section style={{ padding: "2.5rem 1rem", background: "#f8fafc" }}>
+    <section id="gallery" style={{ padding: "60px 20px", backgroundColor: "#f8f8f8" }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12 }}>Before &amp; After</h2>
-        <PhotoAlbum layout="rows" photos={photos} targetRowHeight={260} onClick={({ index }) => setIndex(index)} />
+        <h2 style={{ ...h2, textAlign: "center", marginBottom: 12 }}>Before &amp; After Gallery</h2>
+        <p style={{ textAlign: "center", maxWidth: 700, margin: "0 auto 28px", fontSize: "1.05rem", color: colors.sub }}>
+          See the difference professional cleaning makes. Every job is done with care, precision, and results you can see immediately.
+        </p>
+
+        <PhotoAlbum
+          layout="columns"
+          photos={photos}
+          columns={(w) => (w < 600 ? 1 : 2)}
+          spacing={8}
+          renderPhoto={({ wrapperStyle, imageProps, photo }) => (
+            <div style={{ ...wrapperStyle }}>
+              <img {...imageProps} alt={photo.alt} style={{ width: "100%", height: "auto", borderRadius: 8 }} />
+              <div style={{ fontSize: 13, color: "#6b7280", marginTop: 6, textAlign: "center" }}>{photo.title}</div>
+            </div>
+          )}
+          onClick={({ index }) => setIndex(index)}
+        />
+
         <Lightbox
           open={index >= 0}
           close={() => setIndex(-1)}
@@ -111,219 +164,81 @@ function BeforeAfterGallery() {
   );
 }
 
-export default function App() {
-  const [showModal, setShowModal] = useState(false);
-  const [clientSecret, setClientSecret] = useState("");
-  const [amount, setAmount] = useState("350.00");
-
-  async function startPayment() {
-    try {
-      const cents = Math.round(parseFloat(amount) * 100);
-      if (!cents || cents <= 0) {
-        alert("Enter a valid amount (e.g., 350.00)");
-        return;
-      }
-      const res = await fetch("/.netlify/functions/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: cents, currency: "usd", metadata: { source: "GForce Netlify" } })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Failed to create payment intent");
-      setClientSecret(data.clientSecret);
-    } catch (e) {
-      alert(e.message || "Could not start payment");
-    }
-  }
-
-  const options = clientSecret ? { clientSecret } : undefined;
-
+/* ---------- contact ---------- */
+function ContactSection() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
-      {/* Hero */}
-      <section
-        style={{
-          padding: "4rem 1rem",
-          background: "linear-gradient(180deg, #eef2ff 0%, #f8fafc 50%, #f1f5f9 100%)",
-          borderBottom: `1px solid ${colors.border}`,
-        }}
-      >
-        <div style={container}>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "0.75rem", fontWeight: 800, color: colors.ink }}>
-            G-Force Exterior Cleaning
-          </h1>
-          <p style={{ fontSize: "1.1rem", maxWidth: 840, margin: "0 auto", color: colors.sub }}>
-            G-Force Exterior Cleaning Services helps South Florida properties look their best while protecting roofs,
-            paint, and landscaping. We schedule around your needs—early mornings, weekends, or off-peak hours—and we
-            offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear
-            communication, photo documentation, and results you can see.
-          </p>
-          <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
-            <ImageWithFallback
-              srcs={[
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-              ]}
-              alt="Klarna"
-              style={{ height: 22 }}
-            />
-            <span style={{ fontSize: 12, color: colors.sub }}>*Subject to approval. Terms from Klarna.</span>
-          </div>
-          <div style={{ marginTop: 20, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#contact" style={btnSolid}>Call for a quote</a>
-            <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
-          </div>
-        </div>
-      </section>
-
-      {/* About */}
-      <section style={{ padding: "2.5rem 1rem" }}>
-        <div style={{ ...container, ...sectionCard, padding: 16 }}>
-          <h2 style={{ ...h2, marginBottom: 8 }}>About G-Force</h2>
-          <p style={{ color: colors.sub, margin: 0 }}>
-            Hi, I’m Mr. G. I help homeowners, HOAs, and businesses in Broward keep properties looking their best with
-            safe soft-wash methods and reliable scheduling. We’ll tailor a plan for your budget—one-time clean or VIP
-            Maintenance—so you get predictable costs and great results.
-          </p>
-        </div>
-      </section>
-
-      {/* Services */}
-      <section style={{ padding: "2.5rem 1rem" }}>
-        <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
-          <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
-            <li>Soft-wash roof cleaning</li>
-            <li>House & building wash</li>
-            <li><strong>Pressure Cleaning:</strong> Driveways, sidewalks & pavers (sealing optional)</li>
-            <li>HOA & commercial schedules</li>
-            <li>Heavy equipment & dumpster pads</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <Testimonials />
-
-      {/* Before & After Gallery */}
-      <BeforeAfterGallery />
-
-      {/* Contact (Netlify Form) */}
-      <section id="contact" style={{ padding: "2.5rem 1rem" }}>
-        <div style={container}>
-          <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
+    <section id="contact" style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Get Your Free Quote</h2>
         <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-            Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+          Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+        </p>
+
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action="/thanks"
+          style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p style={{ display: "none" }}>
+            <label>Don’t fill this out: <input name="bot-field" /></label>
           </p>
 
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            <p style={{ display: "none" }}>
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
-
-            <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-              <label style={label}>
-                Name
-                <input name="name" required style={input} />
-              </label>
-              <label style={label}>
-                Email
-                <input type="email" name="email" required style={input} />
-              </label>
-            </div>
-
-            <label style={label}>
-              What would you like cleaned?
-              <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-            </label>
-
-            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-              <button type="submit" style={btnSolid}>Send</button>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: colors.sub }}>
-                <ImageWithFallback
-                  srcs={[
-                    "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-                  ]}
-                  alt="Klarna"
-                  style={{ height: 14 }}
-                />
-                <span>*Financing available.</span>
-              </div>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center" }}>
-        <div style={container}>
-          <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-          <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            <ImageWithFallback
-              srcs={[
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-              ]}
-              alt="Klarna"
-              style={{ height: 22, marginTop: 6, filter: "invert(1)" }}
-            />
+          <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+            <label style={label}>Name<input name="name" required style={input} /></label>
+            <label style={label}>Email<input type="email" name="email" required style={input} /></label>
           </div>
-        </div>
-      </footer>
 
-      {/* Stripe/Klarna Modal */}
-      {showModal && (
-        <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
-          <div style={modalCard}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <h3 style={{ margin: 0 }}>Finance with Klarna</h3>
-              <button onClick={() => setShowModal(false)} style={xBtn} aria-label="Close">✕</button>
-            </div>
+          <label style={label}>What would you like cleaned?
+            <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+          </label>
 
-            {!clientSecret && (
-              <div style={{ display: "grid", gap: 10 }}>
-                <label style={label}>
-                  Project amount (USD)
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="50"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    style={input}
-                    placeholder="e.g., 350.00"
-                  />
-                </label>
-                <button style={btnSolid} onClick={startPayment}>Continue to payment</button>
-                {!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY && (
-                  <div style={{ fontSize: 12, color: "#b91c1c" }}>
-                    Missing publishable key. Add <code>VITE_STRIPE_PUBLISHABLE_KEY</code> in Netlify → Environment variables.
-                  </div>
-                )}
-              </div>
-            )}
-
-            {clientSecret && (
-              <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm onClose={() => setShowModal(false)} />
-              </Elements>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+          <button type="submit" style={btnSolid}>Send</button>
+        </form>
+      </div>
+    </section>
   );
 }
 
-/* ---------- Stripe checkout form (no email) ---------- */
+/* ---------- footer ---------- */
+function Footer() {
+  return (
+    <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
+      <div style={{ ...container, display: "grid", gap: 10 }}>
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
+          <img
+            src="/images/veteran-owned.png"
+            alt="Veteran Owned"
+            style={{ height: 40, width: "auto" }}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+          <ImageWithFallback
+            srcs={[
+              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+            ]}
+            alt="Klarna"
+            style={{ height: 32, filter: "invert(1)" }}
+          />
+        </div>
+
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Facebook</a>
+          <a href="https://www.instagram.com/mr.g_pressure_washing" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
+          <a href="https://www.google.com/maps?cid=YOUR_GBP_CID" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
+          <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs-2?osq=g+force+power+washing+of+florida&override_cta=Get+a+quote" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Yelp</a>
+        </div>
+
+        <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+      </div>
+    </footer>
+  );
+}
+
+/* ---------- checkout (Stripe) ---------- */
 function CheckoutForm({ onClose }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -360,75 +275,130 @@ function CheckoutForm({ onClose }) {
   );
 }
 
-/* ---------- styles (polished) ---------- */
+/* ---------- app ---------- */
+export default function App() {
+  const [showModal, setShowModal] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+  const [amount, setAmount] = useState("350.00");
+
+  async function startPayment() {
+    try {
+      const cents = Math.round(parseFloat(amount) * 100);
+      if (!cents || cents <= 0) return alert("Enter a valid amount (e.g., 350.00)");
+      const res = await fetch("/.netlify/functions/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: cents, currency: "usd", metadata: { source: "GForce Netlify" } })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Failed to create payment intent");
+      setClientSecret(data.clientSecret);
+    } catch (e) {
+      alert(e.message || "Could not start payment");
+    }
+  }
+
+  const options = clientSecret ? { clientSecret } : undefined;
+
+  return (
+    <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
+      <Header />
+
+      {/* hero */}
+      <section style={{ padding: "3rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
+        <div style={container}>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
+            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 48, width: "auto" }}
+                 onError={(e) => (e.currentTarget.style.display = "none")} />
+            <ImageWithFallback
+              srcs={[
+                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+              ]}
+              alt="Klarna"
+              style={{ height: 28 }}
+            />
+          </div>
+
+          <h1 style={{ fontSize: "2.25rem", marginBottom: "0.5rem", fontWeight: 800, color: "white", textAlign: "center" }}>
+            G-Force Exterior Cleaning
+          </h1>
+          <p style={{ fontSize: "1.05rem", maxWidth: 880, margin: "0 auto", color: "#cbd5e1", textAlign: "center" }}>
+            <strong>G-Force Exterior Cleaning Services</strong> provides professional <strong>pressure cleaning in Broward County</strong> and the surrounding South Florida area. We help homes, HOAs, and commercial properties look their best while protecting roofs, paint, and landscaping. Our services include pressure washing driveways, roof cleaning, and full exterior cleaning. We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo documentation, and results you can see.
+          </p>
+
+          <div style={{ marginTop: 18, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#contact" style={btnSolid}>Free Quote</a>
+            <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
+            <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnOutline}>Commercial Services</a>
+          </div>
+        </div>
+      </section>
+
+      <ServicesSection />
+      <Testimonials />
+      <BeforeAfterGallery />
+      <FAQ />
+      <ContactSection />
+      <Footer />
+
+      {/* modal */}
+      {showModal && (
+        <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
+          <div style={modalCard}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <h3 style={{ margin: 0 }}>Finance with Klarna</h3>
+              <button onClick={() => setShowModal(false)} style={xBtn} aria-label="Close">✕</button>
+            </div>
+
+            {!clientSecret && (
+              <div style={{ display: "grid", gap: 10 }}>
+                <label style={label}>Project amount (USD)
+                  <input type="number" step="0.01" min="50" value={amount} onChange={(e) => setAmount(e.target.value)} style={input} placeholder="e.g., 350.00" />
+                </label>
+                <button style={btnSolid} onClick={startPayment}>Continue to payment</button>
+                {!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY && (
+                  <div style={{ fontSize: 12, color: "#b91c1c" }}>
+                    Missing publishable key. Add <code>VITE_STRIPE_PUBLISHABLE_KEY</code> in Netlify → Environment variables.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {clientSecret && (
+              <Elements stripe={stripePromise} options={options}>
+                <CheckoutForm onClose={() => setShowModal(false)} />
+              </Elements>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ---------- styles ---------- */
 const colors = {
   ink: "#0f172a",
   text: "#0f172a",
   sub: "#475569",
   border: "#e2e8f0",
+  borderDark: "#1f2937",
   accent: "#0f172a",
-  pageBg: "#f1f5f9",
+  pageBg: "#e5e7eb",
   cardBg: "#ffffff",
+  panel: "#1f2937"
 };
 
-const btnSolid = {
-  background: colors.accent,
-  color: "white",
-  border: "none",
-  padding: "12px 16px",
-  borderRadius: 12,
-  cursor: "pointer",
-  fontSize: 14,
-};
-
-const btnOutline = {
-  background: "transparent",
-  color: colors.accent,
-  border: `1px solid ${colors.border}`,
-  padding: "12px 16px",
-  borderRadius: 12,
-  cursor: "pointer",
-  fontSize: 14,
-};
-
-const h2 = {
-  fontSize: "1.75rem",
-  fontWeight: 800,
-  textAlign: "center",
-  margin: 0,
-  color: colors.text,
-};
-
-const container = { maxWidth: 960, margin: "0 auto" };
-
-const sectionCard = {
-  background: colors.cardBg,
-  border: `1px solid ${colors.border}`,
-  borderRadius: 16,
-  boxShadow: "0 1px 2px rgba(2,6,23,0.06)",
-};
-
-const modalBackdrop = {
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.55)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: 12,
-  zIndex: 50,
-};
-
-const modalCard = {
-  background: colors.cardBg,
-  borderRadius: 16,
-  padding: 16,
-  width: "100%",
-  maxWidth: 520,
-  boxShadow: "0 12px 30px rgba(2,6,23,0.24)",
-  border: `1px solid ${colors.border}`,
-};
-
+const btnSolid = { background: "#334155", color: "white", border: "none", padding: "12px 16px", borderRadius: 12, cursor: "pointer", fontSize: 14 };
+const btnOutline = { background: "transparent", color: "white", border: "1px solid #94a3b8", padding: "12px 16px", borderRadius: 12, cursor: "pointer", fontSize: 14 };
+const btnMini = { background: "#334155", color: "white", border: "none", padding: "8px 12px", borderRadius: 10, cursor: "pointer", fontSize: 13 };
+const btnMiniOutline = { background: "transparent", color: "white", border: "1px solid #94a3b8", padding: "8px 12px", borderRadius: 10, cursor: "pointer", fontSize: 13 };
+const h2 = { fontSize: "1.75rem", fontWeight: 800, margin: 0, color: colors.text };
+const container = { maxWidth: 980, margin: "0 auto" };
+const sectionCard = { background: colors.cardBg, border: `1px solid ${colors.border}`, borderRadius: 16, boxShadow: "0 1px 2px rgba(2,6,23,0.06)" };
+const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
+const modalCard = { background: colors.cardBg, borderRadius: 16, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 12px 30px rgba(2,6,23,0.24)", border: `1px solid ${colors.border}` };
 const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
 const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
 const input = { width: "100%", padding: "10px 12px", borderRadius: 12, border: `1px solid ${colors.border}`, background: "#fff", marginTop: 4 };

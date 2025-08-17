@@ -2,66 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
-    <!-- Basic SEO -->
-    <title>G-Force Exterior Cleaning Services | Pressure Cleaning Broward County</title>
-    <meta name="description" content="G-Force Exterior Cleaning Services offers expert pressure cleaning in Broward County, roof cleaning, and exterior washing in South Florida. Serving homeowners, HOAs, and businesses with flexible scheduling and financing.">
-    <meta name="keywords" content="pressure cleaning Broward, pressure washing Broward County, roof cleaning South Florida, exterior cleaning Broward, driveway pressure cleaning, HOA cleaning, commercial pressure washing">
-
-    <!-- Mobile responsiveness -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Open Graph (Social Media preview) -->
-    <meta property="og:title" content="G-Force Exterior Cleaning Services | Pressure Cleaning Broward County" />
-    <meta property="og:description" content="Professional pressure cleaning in Broward County. Roof cleaning, driveway pressure washing, commercial exterior cleaning, and more. Financing available with Klarna." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.gforceclean.com/" />
-    <meta property="og:image" content="https://www.gforceclean.com/og-image.jpg" />
+    <title>Pressure Washing Broward County | Roof & Exterior Cleaning | G-Force</title>
+    <meta name="description" content="Veteran-owned G-Force provides pressure washing and soft-wash roof cleaning across Broward County. Homes, HOAs & commercial. Financing via Klarna. Free quotes." />
+    <link rel="icon" href="/favicon.ico" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="G-Force Exterior Cleaning Services | Pressure Cleaning Broward County" />
-    <meta name="twitter:description" content="Professional pressure cleaning in Broward County. Roof cleaning, driveway pressure washing, commercial exterior cleaning, and more. Financing available with Klarna." />
-    <meta name="twitter:image" content="https://www.gforceclean.com/og-image.jpg" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-
-    <!-- Structured Data (LocalBusiness) -->
+    <!-- HOMEPAGE FAQ SCHEMA (JSON-LD) -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "G-Force Exterior Cleaning Services",
-      "image": "https://www.gforceclean.com/logo.png",
-      "url": "https://www.gforceclean.com",
-      "telephone": "+17543340220",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "2139 North University Drive",
-        "addressLocality": "Coral Springs",
-        "addressRegion": "FL",
-        "postalCode": "33071",
-        "addressCountry": "US"
-      },
-      "priceRange": "$$",
-      "servesCuisine": "N/A",
-      "areaServed": {
-        "@type": "Place",
-        "name": "Broward County, Miami-Dade County, Palm Beach County"
-      },
-      "description": "G-Force Exterior Cleaning Services offers expert pressure cleaning in Broward County, roof cleaning, and exterior washing in South Florida. Serving homeowners, HOAs, and businesses with flexible scheduling and financing.",
-      "openingHours": "Mo-Sa 07:00-19:00"
+      "@context":"https://schema.org",
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Do you serve all of Broward County?","acceptedAnswer":{"@type":"Answer","text":"Yes—most of our work is in Broward County, and we cover nearby Miami-Dade and Palm Beach by request."}},
+        {"@type":"Question","name":"Is pressure cleaning safe for my roof and plants?","acceptedAnswer":{"@type":"Answer","text":"We use a soft-wash approach for roofs and pre-wet landscaping to protect plants, then rinse thoroughly."}},
+        {"@type":"Question","name":"Can you schedule early mornings or weekends?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. We offer early mornings, weekends, and off-peak scheduling for homes, HOAs, and businesses."}},
+        {"@type":"Question","name":"Do you offer financing?","acceptedAnswer":{"@type":"Answer","text":"Yes. Finance projects through Klarna via Stripe on our site."}},
+        {"@type":"Question","name":"Do you handle commercial and HOA properties?","acceptedAnswer":{"@type":"Answer","text":"Yes. We provide recurring maintenance with photo documentation, clear reporting, and flexible pricing."}}
+      ]
     }
     </script>
-
-    <!-- Vite injects the bundled CSS/JS -->
-    <script type="module" src="/src/main.jsx"></script>
   </head>
+  <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks" hidden>
+  <input type="hidden" name="form-name" value="contact" />
+  <p><label>Name <input type="text" name="name" /></label></p>
+  <p><label>Email <input type="email" name="email" /></label></p>
+  <p><label>What would you like cleaned? <textarea name="message"></textarea></label></p>
+  <p style="display:none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+</form>
+
   <body>
     <div id="root"></div>
+    <!-- IMPORTANT: keep this exactly as-is so Vite finds your app -->
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
-

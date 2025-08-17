@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Builds
+dist/
+.vite/
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Local env
+.env.local
