@@ -5,13 +5,13 @@ import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-/* Stripe publishable key (Netlify env) */
+/* Stripe publishable key via Netlify env (kept for your Klarna/Stripe modal if you want it later) */
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
-/* Replace with your commercial Squarespace URL */
-const COMMERCIAL_URL = "https://www.gforceclean.com/";
+/* Optional: link to your commercial-only site */
+const COMMERCIAL_URL = "https://your-commercial-squarespace-site.com";
 
-/* ---------- helpers ---------- */
+/* ---------- tiny helper ---------- */
 function ImageWithFallback({ srcs = [], alt = "", style }) {
   const [i, setI] = useState(0);
   if (!srcs.length) return null;
@@ -20,12 +20,12 @@ function ImageWithFallback({ srcs = [], alt = "", style }) {
       src={srcs[i]}
       alt={alt}
       style={style}
-      onError={() => setI((prev) => (prev + 1 < srcs.length ? prev + 1 : prev))}
+      onError={() => setI((p) => (p + 1 < srcs.length ? p + 1 : p))}
     />
   );
 }
 
-/* ---------- header ---------- */
+/* ---------- HEADER ---------- */
 function Header() {
   return (
     <header style={{ background: colors.ink, color: "white", borderBottom: `1px solid ${colors.borderDark}` }}>
@@ -46,30 +46,76 @@ function Header() {
   );
 }
 
-/* ---------- services ---------- */
-function ServicesSection() {
+/* ---------- HERO ---------- */
+function Hero() {
   return (
-    <section style={{ padding: "2rem 1rem" }}>
+    <section style={{ padding: "3rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Services</h2>
-        <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
-          <li><a href="/services/soft-wash-roof-cleaning.html" style={{ color: colors.ink, textDecoration: "underline" }}>Soft-wash roof cleaning</a></li>
-          <li><a href="/services/house-and-building-wash.html" style={{ color: colors.ink, textDecoration: "underline" }}>House &amp; building wash</a></li>
-          <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={{ color: colors.ink, textDecoration: "underline" }}>Pressure Cleaning – Driveways, sidewalks &amp; pavers (sealing optional)</a></li>
-          <li><a href="/services/hoa-and-commercial-schedules.html" style={{ color: colors.ink, textDecoration: "underline" }}>HOA &amp; commercial schedules</a></li>
-          <li><a href="/services/heavy-equipment-and-dumpster-pads.html" style={{ color: colors.ink, textDecoration: "underline" }}>Heavy equipment &amp; dumpster pads</a></li>
-        </ul>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
+          <img
+            src="/images/veteran-owned.png"
+            alt="Veteran Owned"
+            style={{ height: 56, width: "auto" }}
+            onError={(e) => (e.currentTarget.style.display = "none")}
+          />
+          <ImageWithFallback
+            srcs={[
+              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
+            ]}
+            alt="Klarna"
+            style={{ height: 32 }}
+          />
+        </div>
+
+        <h1 style={{ fontSize: "2.35rem", marginBottom: "0.5rem", fontWeight: 800, color: "white", textAlign: "center" }}>
+          Pressure Washing & Soft Wash Roof Cleaning in Broward County
+        </h1>
+
+        <p style={{ fontSize: "1.05rem", maxWidth: 920, margin: "0 auto", color: "#cbd5e1", textAlign: "center" }}>
+          Welcome to <strong>G-Force Exterior Cleaning Services</strong> — your veteran-owned local expert for
+          <strong> pressure cleaning in Broward County</strong>, including Coral Springs, Parkland, and Fort Lauderdale.
+          We provide roof soft washing, driveway &amp; paver cleaning, and full exterior pressure cleaning that
+          restores curb appeal and protects your property. Flexible scheduling, photo documentation, and financing via Klarna.
+        </p>
+
+        <div style={{ marginTop: 18, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <a href="#contact" style={btnSolid}>Get a Free Quote</a>
+          <a href="#gallery" style={btnOutline}>See Before &amp; After</a>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ---------- testimonials ---------- */
+/* ---------- SERVICES (with internal links) ---------- */
+function ServicesSection() {
+  return (
+    <section style={{ padding: "2rem 1rem" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Our Exterior Cleaning Services in Broward County</h2>
+        <ul style={{ maxWidth: 900, margin: "0 auto", display: "grid", gap: 12, color: colors.sub }}>
+          <li><a href="/services/soft-wash-roof-cleaning.html" style={link}>Soft Wash Roof Cleaning in Broward County</a></li>
+          <li><a href="/services/house-and-building-wash.html" style={link}>House &amp; Building Washing in Coral Springs</a></li>
+          <li><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html" style={link}>Pressure Cleaning – Driveways, Sidewalks &amp; Pavers (Sealing Optional)</a></li>
+          <li><a href="/services/hoa-and-commercial-schedules.html" style={link}>HOA &amp; Commercial Pressure Cleaning Schedules in Broward</a></li>
+          <li><a href="/services/heavy-equipment-and-dumpster-pads.html" style={link}>Heavy Equipment &amp; Dumpster Pad Cleaning</a></li>
+        </ul>
+        <p style={{ maxWidth: 900, margin: "14px auto 0", color: colors.sub, textAlign: "center" }}>
+          Whether you need one-time service or recurring <strong>pressure cleaning services in Broward County</strong> for HOAs and commercial sites,
+          G-Force delivers consistent, professional results.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- TESTIMONIALS ---------- */
 function Testimonials() {
   const items = [
-    { quote: "G-Force made our roof and driveway look brand new. On time, careful, and priced right.", name: "Erica P.", role: "Homeowner – Coral Springs" },
-    { quote: "Reliable, fast, and professional. Perfect for HOA common areas and sidewalks.", name: "David R.", role: "HOA Board Member – Pembroke Pines" },
-    { quote: "Our storefront shines after every service. Customers noticed immediately.", name: "Monique L.", role: "Retail Manager – Fort Lauderdale" }
+    { quote: "Our roof looks brand new after G-Force’s soft wash roof cleaning.", name: "Homeowner – Coral Springs, FL" },
+    { quote: "Reliable and punctual. They handle our HOA’s sidewalks and common areas flawlessly.", name: "HOA Board – Parkland, FL" },
+    { quote: "Driveway pressure washing and paver sealing were excellent. Big improvement in curb appeal.", name: "Property Manager – Fort Lauderdale, FL" }
   ];
   return (
     <section style={{ padding: "2rem 1rem" }}>
@@ -79,7 +125,7 @@ function Testimonials() {
           {items.map((t, i) => (
             <div key={i} style={{ ...sectionCard, padding: 16 }}>
               <p style={{ margin: 0, color: colors.sub }}>&ldquo;{t.quote}&rdquo;</p>
-              <div style={{ marginTop: 8, fontSize: 12, color: colors.sub }}>{t.name} — {t.role}</div>
+              <div style={{ marginTop: 8, fontSize: 12, color: colors.sub }}>{t.name}</div>
             </div>
           ))}
         </div>
@@ -88,14 +134,52 @@ function Testimonials() {
   );
 }
 
+/* ---------- GALLERY ---------- */
+function BeforeAfterGallery() {
+  const photos = [
+    { src: "/images/condo-dirty.jpg",                  width: 1200, height: 800, alt: "Condo exterior before soft wash in Broward County", title: "Condo Wall – Before Cleaning" },
+    { src: "/images/before-and-after-bulldozer-2.jpg", width: 1200, height: 800, alt: "Bulldozer before and after deep cleaning",        title: "Bulldozer – Before & After" },
+    { src: "/images/before-and-after-house-2.jpg",     width: 1200, height: 800, alt: "House exterior soft wash in Coral Springs",      title: "House Exterior – Before & After" },
+    { src: "/images/gas-station-before-and-after.jpg", width: 1200, height: 800, alt: "Gas station pressure cleaning before and after", title: "Gas Station – Before & After" }
+  ];
+  const [index, setIndex] = useState(-1);
+
+  return (
+    <section id="gallery" style={{ padding: "60px 20px", backgroundColor: "#f8f8f8" }}>
+      <div style={container}>
+        <h2 style={{ ...h2, textAlign: "center", marginBottom: 12 }}>Before &amp; After Pressure Cleaning Results</h2>
+        <p style={{ textAlign: "center", maxWidth: 760, margin: "0 auto 28px", fontSize: "1.05rem", color: colors.sub }}>
+          See the difference professional <strong>pressure cleaning in Broward County</strong> makes—fast, safe, and long-lasting results.
+        </p>
+
+        <PhotoAlbum
+          layout="columns"
+          photos={photos}
+          columns={(w) => (w < 600 ? 1 : 2)}
+          spacing={8}
+          renderPhoto={({ wrapperStyle, imageProps, photo }) => (
+            <div style={{ ...wrapperStyle }}>
+              <img {...imageProps} alt={photo.alt} style={{ width: "100%", height: "auto", borderRadius: 8 }} />
+              <div style={{ fontSize: 13, color: "#6b7280", marginTop: 6, textAlign: "center" }}>{photo.title}</div>
+            </div>
+          )}
+          onClick={({ index }) => setIndex(index)}
+        />
+
+        <Lightbox open={index >= 0} close={() => setIndex(-1)} slides={photos.map((p) => ({ src: p.src, alt: p.alt }))} />
+      </div>
+    </section>
+  );
+}
+
 /* ---------- FAQ ---------- */
 function FAQ() {
   const qas = [
-    { q: "Do you serve all of Broward County?", a: "Yes—most of our work is in Broward, and we cover nearby areas in Miami-Dade and Palm Beach by request." },
-    { q: "Is pressure cleaning safe for my roof and plants?", a: "We use a soft-wash approach for roofs and pre-wet landscaping to protect plants. We also rinse surfaces thoroughly." },
-    { q: "Can you schedule early mornings or weekends?", a: "Absolutely. We work around traffic and business hours—early mornings, weekends, or off-peak times." },
-    { q: "Do you offer financing?", a: "Yes. Through Klarna via Stripe. Choose 'Finance with Klarna' on this page to apply." },
-    { q: "Do you handle commercial/HOA properties?", a: "Yes. We offer long-term and multi-site schedules with flexible pricing and photo documentation." }
+    { q: "Do you serve all of Broward County?", a: "Yes—most work is in Broward, and we cover nearby Miami-Dade and Palm Beach on request." },
+    { q: "Is pressure cleaning safe for my roof and plants?", a: "We use a soft-wash approach for roofs and pre-wet landscaping to protect plants." },
+    { q: "Can you schedule early mornings or weekends?", a: "Absolutely. We offer early morning, weekend, and off-peak scheduling for homes, HOAs, and businesses." },
+    { q: "Do you offer financing?", a: "Yes. Finance projects through Klarna via Stripe on this page." },
+    { q: "Do you handle commercial/HOA properties?", a: "Yes. We provide recurring maintenance with photo documentation and flexible pricing." }
   ];
   const [open, setOpen] = useState(-1);
   return (
@@ -122,257 +206,151 @@ function FAQ() {
   );
 }
 
-/* ---------- gallery (2 columns; public paths) ---------- */
-function BeforeAfterGallery() {
-  const photos = [
-    { src: "/images/condo-dirty.jpg",                  width: 800, height: 600, alt: "Dirty condo wall before cleaning", title: "Condo Wall – Before Cleaning" },
-    { src: "/images/before-and-after-bulldozer-2.jpg", width: 800, height: 600, alt: "Bulldozer before and after cleaning", title: "Bulldozer – Before & After" },
-    { src: "/images/before-and-after-house-2.jpg",     width: 800, height: 600, alt: "House exterior before and after cleaning", title: "House Exterior – Before & After" },
-    { src: "/images/gas-station-before-and-after.jpg", width: 800, height: 600, alt: "Gas station before and after cleaning", title: "Gas Station – Before & After" }
-  ];
-  const [index, setIndex] = useState(-1);
+/* ---------- CONTACT (AJAX Netlify Form) ---------- */
+function ContactForm() {
+  const [status, setStatus] = React.useState("idle"); // idle | submitting | success | error
+  const [error, setError] = React.useState("");
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus("submitting");
+    setError("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const body = new URLSearchParams(formData).toString(); // Netlify expects urlencoded
+
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        throw new Error("Form submit failed");
+      }
+    } catch (err) {
+      setStatus("error");
+      setError(err.message || "Something went wrong. Please try again.");
+    }
+  }
+
+  if (status === "success") {
+    return (
+      <div style={{ ...sectionCard, padding: 16, background: "#f8fafc" }}>
+        <h3 style={{ marginTop: 0 }}>Thanks! Your request has been sent.</h3>
+        <p>
+          We’ll be in touch shortly. If it’s urgent, call{" "}
+          <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <section id="gallery" style={{ padding: "60px 20px", backgroundColor: "#f8f8f8" }}>
-      <div style={container}>
-        <h2 style={{ ...h2, textAlign: "center", marginBottom: 12 }}>Before &amp; After Gallery</h2>
-        <p style={{ textAlign: "center", maxWidth: 700, margin: "0 auto 28px", fontSize: "1.05rem", color: colors.sub }}>
-          See the difference professional cleaning makes. Every job is done with care, precision, and results you can see immediately.
-        </p>
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      onSubmit={handleSubmit}
+      style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
+    >
+      {/* Let Netlify know which form this is */}
+      <input type="hidden" name="form-name" value="contact" />
 
-        <PhotoAlbum
-          layout="columns"
-          photos={photos}
-          columns={(w) => (w < 600 ? 1 : 2)}
-          spacing={8}
-          renderPhoto={({ wrapperStyle, imageProps, photo }) => (
-            <div style={{ ...wrapperStyle }}>
-              <img {...imageProps} alt={photo.alt} style={{ width: "100%", height: "auto", borderRadius: 8 }} />
-              <div style={{ fontSize: 13, color: "#6b7280", marginTop: 6, textAlign: "center" }}>{photo.title}</div>
-            </div>
-          )}
-          onClick={({ index }) => setIndex(index)}
-        />
+      {/* Honeypot (hidden) */}
+      <p style={{ display: "none" }}>
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
 
-        <Lightbox
-          open={index >= 0}
-          close={() => setIndex(-1)}
-          slides={photos.map((p) => ({ src: p.src, alt: p.alt }))}
-        />
+      <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
+        <label style={label}>Name<input name="name" required style={input} /></label>
+        <label style={label}>Email<input type="email" name="email" required style={input} /></label>
       </div>
-    </section>
+
+      <label style={label}>What would you like cleaned?
+        <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
+      </label>
+
+      <button type="submit" disabled={status === "submitting"} style={btnSolid}>
+        {status === "submitting" ? "Sending…" : "Send"}
+      </button>
+
+      {status === "error" && (
+        <div style={{ color: "#b91c1c", fontSize: 13 }}>{error}</div>
+      )}
+    </form>
   );
 }
 
-/* ---------- contact ---------- */
 function ContactSection() {
   return (
     <section id="contact" style={{ padding: "2rem 1rem" }}>
       <div style={container}>
-        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>Get Your Free Quote</h2>
+        <h2 style={{ ...h2, marginBottom: 12, textAlign: "center" }}>
+          Request a Free Pressure Washing Estimate
+        </h2>
         <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
-          Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
+          Prefer to talk now? Call{" "}
+          <a href="tel:+17543340220" style={{ color: colors.ink }}>
+            (754) 334-0220
+          </a>
         </p>
-
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action="/thanks"
-          style={{ ...sectionCard, padding: 16, display: "grid", gap: 12 }}
-        >
-          <input type="hidden" name="form-name" value="contact" />
-          <p style={{ display: "none" }}>
-            <label>Don’t fill this out: <input name="bot-field" /></label>
-          </p>
-
-          <div style={{ display: "grid", gap: 12, gridTemplateColumns: "1fr 1fr" }}>
-            <label style={label}>Name<input name="name" required style={input} /></label>
-            <label style={label}>Email<input type="email" name="email" required style={input} /></label>
-          </div>
-
-          <label style={label}>What would you like cleaned?
-            <textarea name="message" rows={4} required style={{ ...input, resize: "vertical" }} />
-          </label>
-
-          <button type="submit" style={btnSolid}>Send</button>
-        </form>
+        <ContactForm />
       </div>
     </section>
   );
 }
 
-/* ---------- footer ---------- */
+/* ---------- FOOTER ---------- */
 function Footer() {
   return (
     <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
       <div style={{ ...container, display: "grid", gap: 10 }}>
-        <div style={{ display: "flex", gap: 10, justifyContent: "center", alignItems: "center" }}>
-          <img
-            src="/images/veteran-owned.png"
-            alt="Veteran Owned"
-            style={{ height: 40, width: "auto" }}
-            onError={(e) => (e.currentTarget.style.display = "none")}
-          />
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center" }}>
+          <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 46, width: "auto" }}
+               onError={(e) => (e.currentTarget.style.display = "none")} />
           <ImageWithFallback
             srcs={[
               "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
               "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
             ]}
             alt="Klarna"
-            style={{ height: 32, filter: "invert(1)" }}
+            style={{ height: 34, filter: "invert(1)" }}
           />
         </div>
 
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
           <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Facebook</a>
-          <a href="https://www.instagram.com/mr.g_pressure_washing" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
-          <a href="https://www.google.com/maps?cid=YOUR_GBP_CID" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
-          <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs-2?osq=g+force+power+washing+of+florida&override_cta=Get+a+quote" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Yelp</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
+          <a href="https://g.page/r/CUsc9DDyJzH7EB0/review" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
+          <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Yelp</a>
         </div>
 
-        <p style={{ margin: 0 }}>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+        <p style={{ margin: 0 }}>
+          Proudly serving Coral Springs, Parkland, Fort Lauderdale &amp; all of Broward County · © {new Date().getFullYear()} G-Force Exterior Cleaning Services
+        </p>
       </div>
     </footer>
   );
 }
 
-/* ---------- checkout (Stripe) ---------- */
-function CheckoutForm({ onClose }) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!stripe || !elements) return;
-    setSubmitting(true);
-    setError("");
-
-    const { error: err } = await stripe.confirmPayment({
-      elements,
-      confirmParams: { return_url: window.location.href }
-    });
-
-    if (err) {
-      setError(err.message || "Payment could not be confirmed.");
-      setSubmitting(false);
-    } else {
-      onClose();
-    }
-  }
-
-  return (
-    <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12 }}>
-      <PaymentElement />
-      {error && <div style={{ color: "#b91c1c", fontSize: 13 }}>{error}</div>}
-      <button type="submit" disabled={!stripe || submitting} style={btnSolid}>
-        {submitting ? "Processing…" : "Pay / Apply with Klarna"}
-      </button>
-    </form>
-  );
-}
-
-/* ---------- app ---------- */
+/* ---------- APP ---------- */
 export default function App() {
-  const [showModal, setShowModal] = useState(false);
-  const [clientSecret, setClientSecret] = useState("");
-  const [amount, setAmount] = useState("350.00");
-
-  async function startPayment() {
-    try {
-      const cents = Math.round(parseFloat(amount) * 100);
-      if (!cents || cents <= 0) return alert("Enter a valid amount (e.g., 350.00)");
-      const res = await fetch("/.netlify/functions/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: cents, currency: "usd", metadata: { source: "GForce Netlify" } })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Failed to create payment intent");
-      setClientSecret(data.clientSecret);
-    } catch (e) {
-      alert(e.message || "Could not start payment");
-    }
-  }
-
-  const options = clientSecret ? { clientSecret } : undefined;
-
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", color: colors.text, background: colors.pageBg }}>
       <Header />
-
-      {/* hero */}
-      <section style={{ padding: "3rem 1rem", background: colors.panel, borderBottom: `1px solid ${colors.borderDark}` }}>
-        <div style={container}>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center", marginBottom: 10 }}>
-            <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 48, width: "auto" }}
-                 onError={(e) => (e.currentTarget.style.display = "none")} />
-            <ImageWithFallback
-              srcs={[
-                "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-              ]}
-              alt="Klarna"
-              style={{ height: 28 }}
-            />
-          </div>
-
-          <h1 style={{ fontSize: "2.25rem", marginBottom: "0.5rem", fontWeight: 800, color: "white", textAlign: "center" }}>
-            G-Force Exterior Cleaning
-          </h1>
-          <p style={{ fontSize: "1.05rem", maxWidth: 880, margin: "0 auto", color: "#cbd5e1", textAlign: "center" }}>
-            <strong>G-Force Exterior Cleaning Services</strong> provides professional <strong>pressure cleaning in Broward County</strong> and the surrounding South Florida area. We help homes, HOAs, and commercial properties look their best while protecting roofs, paint, and landscaping. Our services include pressure washing driveways, roof cleaning, and full exterior cleaning. We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo documentation, and results you can see.
-          </p>
-
-          <div style={{ marginTop: 18, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#contact" style={btnSolid}>Free Quote</a>
-            <button style={btnOutline} onClick={() => setShowModal(true)}>Finance with Klarna</button>
-            <a href={COMMERCIAL_URL} target="_blank" rel="noreferrer" style={btnOutline}>Commercial Services</a>
-          </div>
-        </div>
-      </section>
-
+      <Hero />
       <ServicesSection />
       <Testimonials />
       <BeforeAfterGallery />
       <FAQ />
       <ContactSection />
       <Footer />
-
-      {/* modal */}
-      {showModal && (
-        <div style={modalBackdrop} onClick={(e) => e.currentTarget === e.target && setShowModal(false)}>
-          <div style={modalCard}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <h3 style={{ margin: 0 }}>Finance with Klarna</h3>
-              <button onClick={() => setShowModal(false)} style={xBtn} aria-label="Close">✕</button>
-            </div>
-
-            {!clientSecret && (
-              <div style={{ display: "grid", gap: 10 }}>
-                <label style={label}>Project amount (USD)
-                  <input type="number" step="0.01" min="50" value={amount} onChange={(e) => setAmount(e.target.value)} style={input} placeholder="e.g., 350.00" />
-                </label>
-                <button style={btnSolid} onClick={startPayment}>Continue to payment</button>
-                {!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY && (
-                  <div style={{ fontSize: 12, color: "#b91c1c" }}>
-                    Missing publishable key. Add <code>VITE_STRIPE_PUBLISHABLE_KEY</code> in Netlify → Environment variables.
-                  </div>
-                )}
-              </div>
-            )}
-
-            {clientSecret && (
-              <Elements stripe={stripePromise} options={options}>
-                <CheckoutForm onClose={() => setShowModal(false)} />
-              </Elements>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -395,10 +373,8 @@ const btnOutline = { background: "transparent", color: "white", border: "1px sol
 const btnMini = { background: "#334155", color: "white", border: "none", padding: "8px 12px", borderRadius: 10, cursor: "pointer", fontSize: 13 };
 const btnMiniOutline = { background: "transparent", color: "white", border: "1px solid #94a3b8", padding: "8px 12px", borderRadius: 10, cursor: "pointer", fontSize: 13 };
 const h2 = { fontSize: "1.75rem", fontWeight: 800, margin: 0, color: colors.text };
-const container = { maxWidth: 980, margin: "0 auto" };
+const container = { maxWidth: 1000, margin: "0 auto" };
 const sectionCard = { background: colors.cardBg, border: `1px solid ${colors.border}`, borderRadius: 16, boxShadow: "0 1px 2px rgba(2,6,23,0.06)" };
-const modalBackdrop = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.55)", display: "flex", alignItems: "center", justifyContent: "center", padding: 12, zIndex: 50 };
-const modalCard = { background: colors.cardBg, borderRadius: 16, padding: 16, width: "100%", maxWidth: 520, boxShadow: "0 12px 30px rgba(2,6,23,0.24)", border: `1px solid ${colors.border}` };
-const xBtn = { background: "transparent", border: "none", cursor: "pointer", fontSize: 18, lineHeight: 1 };
 const label = { display: "grid", gap: 6, fontSize: 14, color: colors.text };
 const input = { width: "100%", padding: "10px 12px", borderRadius: 12, border: `1px solid ${colors.border}`, background: "#fff", marginTop: 4 };
+const link = { color: colors.ink, textDecoration: "underline" };
