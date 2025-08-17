@@ -23,6 +23,14 @@
     }
     </script>
   </head>
+  <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks" hidden>
+  <input type="hidden" name="form-name" value="contact" />
+  <p><label>Name <input type="text" name="name" /></label></p>
+  <p><label>Email <input type="email" name="email" /></label></p>
+  <p><label>What would you like cleaned? <textarea name="message"></textarea></label></p>
+  <p style="display:none;"><label>Don’t fill this out: <input name="bot-field" /></label></p>
+</form>
+
   <body>
     <div id="root"></div>
     <!-- IMPORTANT: keep this exactly as-is so Vite finds your app -->
