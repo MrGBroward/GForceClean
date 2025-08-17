@@ -309,31 +309,18 @@ function ContactSection() {
 /* ---------- FOOTER ---------- */
 function Footer() {
   return (
-    <footer style={{ padding: "1.25rem", background: colors.ink, color: "white", textAlign: "center", borderTop: `1px solid ${colors.borderDark}` }}>
-      <div style={{ ...container, display: "grid", gap: 10 }}>
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", alignItems: "center" }}>
-          <img src="/images/veteran-owned.png" alt="Veteran Owned" style={{ height: 46, width: "auto" }}
-               onError={(e) => (e.currentTarget.style.display = "none")} />
-          <ImageWithFallback
-            srcs={[
-              "https://upload.wikimedia.org/wikipedia/commons/0/0f/Klarna_Logo_black.svg",
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Klarna_Logo_black.svg/512px-Klarna_Logo_black.svg.png"
-            ]}
-            alt="Klarna"
-            style={{ height: 34, filter: "invert(1)" }}
-          />
-        </div>
-
-        <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-          <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Facebook</a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Instagram</a>
-          <a href="https://g.page/r/CUsc9DDyJzH7EB0/review"Coral Springs FL target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Google Business Profile</a>
-          <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs" target="_blank" rel="noreferrer" style={{ color: "white", textDecoration: "underline" }}>Yelp</a>
-        </div>
-
-        <p style={{ margin: 0 }}>
-          Proudly serving Coral Springs, Parkland, Fort Lauderdale &amp; all of Broward County · © {new Date().getFullYear()} G-Force Exterior Cleaning Services
-        </p>
+    <footer style={{ background: "#222", color: "#fff", padding: "2rem 1rem", textAlign: "center" }}>
+      <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
+      <p>
+        <a href="/privacy-policy.html" style={{ color: "#fff", textDecoration: "underline" }}>
+          Privacy Policy
+        </a>
+      </p>
+      <div style={{ marginTop: "1rem" }}>
+        <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Facebook</a>
+        <a href="https://www.instagram.com/"mr.g_pressure_washing target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Instagram</a>
+        <a href="https://g.page/r/CUsc9DDyJzH7EB0/review" target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Google</a>
+        <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs" target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Yelp</a>
       </div>
     </footer>
   );
