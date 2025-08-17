@@ -1,67 +1,31 @@
 <!doctype html>
 <html lang="en">
- <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Do you serve all of Broward County?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes—most of our work is in Broward County, and we cover nearby Miami-Dade and Palm Beach by request."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is pressure cleaning safe for my roof and plants?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We use a soft-wash approach for roofs and pre-wet landscaping to protect plants, then rinse thoroughly."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can you schedule early mornings or weekends?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Absolutely. We offer early mornings, weekends, and off-peak scheduling for homes, HOAs, and businesses."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you offer financing?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Finance projects through Klarna via Stripe on our site."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you handle commercial and HOA properties?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We provide recurring maintenance with photo documentation, clear reporting, and flexible pricing."
-      }
-    }
-  ]
-}
-</script>
-
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>G-Force Exterior Cleaning Services</title>
+
+    <title>Pressure Washing Broward County | Roof & Exterior Cleaning | G-Force</title>
+    <meta name="description" content="Veteran-owned G-Force provides pressure washing and soft-wash roof cleaning across Broward County. Homes, HOAs & commercial. Financing via Klarna. Free quotes." />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- HOMEPAGE FAQ SCHEMA (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Do you serve all of Broward County?","acceptedAnswer":{"@type":"Answer","text":"Yes—most of our work is in Broward County, and we cover nearby Miami-Dade and Palm Beach by request."}},
+        {"@type":"Question","name":"Is pressure cleaning safe for my roof and plants?","acceptedAnswer":{"@type":"Answer","text":"We use a soft-wash approach for roofs and pre-wet landscaping to protect plants, then rinse thoroughly."}},
+        {"@type":"Question","name":"Can you schedule early mornings or weekends?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. We offer early mornings, weekends, and off-peak scheduling for homes, HOAs, and businesses."}},
+        {"@type":"Question","name":"Do you offer financing?","acceptedAnswer":{"@type":"Answer","text":"Yes. Finance projects through Klarna via Stripe on our site."}},
+        {"@type":"Question","name":"Do you handle commercial and HOA properties?","acceptedAnswer":{"@type":"Answer","text":"Yes. We provide recurring maintenance with photo documentation, clear reporting, and flexible pricing."}}
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- Hidden static form so Netlify can detect fields at build time -->
-<form name="contact" netlify netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name" />
-  <input type="email" name="email" />
-  <textarea name="message"></textarea>
-</form>
+    <!-- IMPORTANT: keep this exactly as-is so Vite finds your app -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
