@@ -1,54 +1,44 @@
-// File: netlify/functions/create-payment-intent.js
-const Stripe = require('stripe');
+// netlify/functions/create-payment-intent.js
 
-// ⬇️ THIS is where your Netlify env var is read.
-// Make sure Site settings → Environment variables has STRIPE_SECRET_KEY set.
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
-});
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async (event) => {
-  // Optional: basic CORS for local tests / cross-origin forms
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json',
-  };
-
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
-  }
-
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
-
+/**
+ * Netlify Function to create a Stripe Payment Intent
+ */
+exports.handler = async function (event, context) {
   try {
-    const { amount, currency = 'usd', customer_email, metadata } = JSON.parse(event.body || '{}');
-
-    // Validate amount (Stripe expects an integer number of the smallest currency unit)
-    if (!amount || isNaN(amount) || amount <= 0) {
-      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing or invalid amount' }) };
+    if (event.httpMethod !== "POST") {
+      return {
+        statusCode: 405,
+        body: JSON.stringify({ error: "Method not allowed" }),
+      };
     }
 
-    const intent = await stripe.paymentIntents.create({
-      amount,                   // e.g. 35000 for $350.00
-      currency,                 // 'usd'
-      automatic_payment_methods: { enabled: true }, // enables Klarna when eligible
-      receipt_email: customer_email,
-      metadata,
+    const { amount, currency } = JSON.parse(event.body);
+
+    if (!amount || !currency) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Missing amount or currency" }),
+      };
+    }
+
+    // Create the payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency,
+      automatic_payment_methods: { enabled: true },
     });
 
     return {
       statusCode: 200,
-      headers,
-      body: JSON.stringify({ clientSecret: intent.client_secret }),
+      body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
     };
-  } catch (err) {
+  } catch (error) {
+    console.error("Stripe payment intent error:", error);
     return {
-      statusCode: 400,
-      headers,
-      body: JSON.stringify({ error: err.message || 'Failed to create PaymentIntent' }),
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
     };
   }
 };

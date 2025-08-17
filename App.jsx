@@ -2,16 +2,10 @@ import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
-/* Gallery libs */
+/* Gallery libs (no image imports; we use public paths) */
 import PhotoAlbum from "react-photo-album";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-
-/* Import images so Vite bundles them */
-import gasStation from "./assets/images/gas-station-before-and-after.jpg";
-import condoDirty from "./assets/images/condo-dirty.jpg";
-import bulldozer from "./assets/images/before-and-after-bulldozer-2.jpg";
-import house from "./assets/images/before-and-after-house-2.jpg";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
 
@@ -86,14 +80,17 @@ function Testimonials() {
   );
 }
 
-/* ---------- Before & After Gallery (rows + lightbox) ---------- */
+/* ---------- Before & After Gallery (rows + lightbox, using /public/images) ---------- */
 function BeforeAfterGallery() {
+  // Ensure these files exist in your repo at: public/images/
   const photos = [
-    { src: gasStation, width: 1600, height: 900, alt: "Gas station before & after" },
-    { src: condoDirty, width: 1600, height: 900, alt: "Condo dirty vs cleaned" },
-    { src: bulldozer, width: 1600, height: 900, alt: "Bulldozer before & after" },
-    { src: house, width: 1600, height: 900, alt: "House before & after" },
+    { src: "/images/condo-dirty.jpg",                  width: 1600, height: 900, alt: "Condo exterior cleaning before & after in South Florida" },
+    { src: "/images/before-and-after-bulldozer-2.jpg", width: 1600, height: 900, alt: "Heavy equipment pressure washing before & after" },
+    { src: "/images/before-and-after-house-2.jpg",     width: 1600, height: 900, alt: "House pressure washing before & after in Broward County" },
+    // Optional placeholder while you prepare more photos:
+    // { src: "https://via.placeholder.com/1600x900?text=Before+%26+After", width: 1600, height: 900, alt: "Placeholder" }
   ];
+
   const [index, setIndex] = React.useState(-1);
 
   return (
@@ -153,10 +150,7 @@ export default function App() {
             G-Force Exterior Cleaning
           </h1>
           <p style={{ fontSize: "1.1rem", maxWidth: 840, margin: "0 auto", color: colors.sub }}>
-            G-Force Exterior Cleaning Services helps South Florida properties look their best while protecting roofs,
-            paint, and landscaping. We schedule around your needs—early mornings, weekends, or off-peak hours—and we
-            offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear
-            communication, photo documentation, and results you can see.
+            <strong>G-Force Exterior Cleaning Services</strong> provides professional <strong>pressure cleaning in Broward County</strong> and the surrounding South Florida area. We help homes, HOAs, and commercial properties look their best while protecting roofs, paint, and landscaping. Our services include pressure washing driveways, roof cleaning, and full exterior cleaning. We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo documentation, and results you can see.
           </p>
           <div style={{ marginTop: 16, display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
             <ImageWithFallback
@@ -188,14 +182,14 @@ export default function App() {
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services (no bold on “Pressure Cleaning – Driveways”) */}
       <section style={{ padding: "2.5rem 1rem" }}>
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Services</h2>
           <ul style={{ maxWidth: 800, margin: "0 auto", display: "grid", gap: 8, color: colors.sub }}>
             <li>Soft-wash roof cleaning</li>
             <li>House & building wash</li>
-            <li><strong>Pressure Cleaning:</strong> Driveways, sidewalks & pavers (sealing optional)</li>
+            <li>Pressure Cleaning – Driveways, sidewalks & pavers (sealing optional)</li>
             <li>HOA & commercial schedules</li>
             <li>Heavy equipment & dumpster pads</li>
           </ul>
@@ -212,7 +206,7 @@ export default function App() {
       <section id="contact" style={{ padding: "2.5rem 1rem" }}>
         <div style={container}>
           <h2 style={{ ...h2, marginBottom: 12 }}>Get Your Free Quote</h2>
-        <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
+          <p style={{ textAlign: "center", color: colors.sub, marginBottom: 16 }}>
             Prefer to call? <a href="tel:+17543340220" style={{ color: colors.ink }}>(754) 334-0220</a>
           </p>
 
