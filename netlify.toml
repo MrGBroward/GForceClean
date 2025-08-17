@@ -6,3 +6,10 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  
+# existing build section stays above
+# ...
+[[redirects]]
+  from = "/thanks"
+  to = "/thanks.html"
+  status = 200
