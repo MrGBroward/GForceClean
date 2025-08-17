@@ -308,19 +308,24 @@ function ContactSection() {
 
 /* ---------- FOOTER ---------- */
 function Footer() {
+  const year = new Date().getFullYear();
+  const linkStyle = { color: "#fff", textDecoration: "underline", margin: "0 10px" };
+
   return (
     <footer style={{ background: "#222", color: "#fff", padding: "2rem 1rem", textAlign: "center" }}>
-      <p>© {new Date().getFullYear()} G-Force Exterior Cleaning Services</p>
-      <p>
-        <a href="/privacy-policy.html" style={{ color: "#fff", textDecoration: "underline" }}>
+      <p style={{ margin: "0 0 10px" }}>© {year} G-Force Exterior Cleaning Services</p>
+
+      <p style={{ margin: "0 0 16px" }}>
+        <a href="/privacy-policy.html" style={linkStyle}>
           Privacy Policy
         </a>
       </p>
-      <div style={{ marginTop: "1rem" }}>
-        <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Facebook</a>
-        <a href="https://www.instagram.com/"mr.g_pressure_washing target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Instagram</a>
-        <a href="https://g.page/r/CUsc9DDyJzH7EB0/review" target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Google</a>
-        <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs" target="_blank" rel="noopener noreferrer" style={{ margin: "0 10px", color: "#fff" }}>Yelp</a>
+
+      <div style={{ marginTop: "0.5rem" }}>
+        <a href="https://www.facebook.com/profile.php?id=61576689505011" target="_blank" rel="noopener noreferrer" style={linkStyle}>Facebook</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" style={linkStyle}>Instagram</a>
+        <a href="https://g.page/r/CUsc9DDyJzH7EB0/review" target="_blank" rel="noopener noreferrer" style={linkStyle}>Google</a>
+        <a href="https://www.yelp.com/biz/g-force-exterior-cleaning-services-coral-springs" target="_blank" rel="noopener noreferrer" style={linkStyle}>Yelp</a>
       </div>
     </footer>
   );
