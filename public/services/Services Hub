@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exterior Cleaning Services | Broward County</title>
+<meta name="description" content="Browse all exterior cleaning services offered by G-Force in Broward County: soft wash roof cleaning, house & building wash, driveways/sidewalks/pavers, HOA & commercial schedules, and heavy equipment & dumpster pads.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="/services.html">
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;max-width:900px;margin:0 auto;padding:24px;color:#0f172a;line-height:1.6}
+  a{color:#0f172a;text-decoration:underline}
+  .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:12px 0}
+  .list{display:grid;gap:12px}
+  @media (min-width: 720px){ .list{grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+  <!-- Breadcrumbs -->
+  <nav aria-label="Breadcrumb" style="font-size:.9rem;margin:10px 0;">
+    <a href="/">Home</a> › <span>Services</span>
+  </nav>
+
+  <!-- Top nav shortcuts -->
+  <nav><a href="/">← Home</a> · <a href="/#contact">Free Quote</a> · <a href="/#gallery">Before & After</a></nav>
+
+  <h1>Exterior Cleaning Services in Broward County</h1>
+  <p>
+    G-Force Exterior Cleaning Services helps homes, HOAs, and businesses look their best across Broward County.
+    Choose a service below to see details, process, and FAQs. We offer flexible scheduling, clear communication,
+    and photo documentation on request.
+  </p>
+
+  <section class="list" aria-labelledby="service-list">
+    <h2 id="service-list" style="position:absolute;left:-9999px;">All Services</h2>
+
+    <!-- Soft Wash Roof Cleaning -->
+    <article class="card">
+      <h3><a href="/services/soft-wash-roof-cleaning.html">Soft Wash Roof Cleaning</a></h3>
+      <p>Low-pressure, detergent-based cleaning for tile, shingle, and metal roofs. Safely removes algae and black streaks without surface damage. Pairs well with full exterior wash.</p>
+      <p><a href="/services/soft-wash-roof-cleaning.html">Learn more →</a></p>
+    </article>
+
+    <!-- House & Building Wash -->
+    <article class="card">
+      <h3><a href="/services/house-and-building-wash.html">House &amp; Building Washing</a></h3>
+      <p>Soft wash + pressure cleaning tailored to stucco, siding, brick, and painted surfaces. Ideal for residential, multi-family, and light commercial properties.</p>
+      <p><a href="/services/house-and-building-wash.html">Learn more →</a></p>
+    </article>
+
+    <!-- Driveways / Sidewalks / Pavers -->
+    <article class="card">
+      <h3><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html">Driveways, Sidewalks &amp; Pavers</a></h3>
+      <p>Remove algae, oil, and stains from high-traffic surfaces using surface cleaners and high-flow systems. Optional paver sealing to protect color and lock sand.</p>
+      <p><a href="/services/pressure-cleaning-driveways-sidewalks-pavers.html">Learn more →</a></p>
+    </article>
+
+    <!-- HOA & Commercial Schedules -->
+    <article class="card">
+      <h3><a href="/services/hoa-and-commercial-schedules.html">HOA &amp; Commercial Schedules</a></h3>
+      <p>Recurring maintenance plans for sidewalks, curbs, common areas, pool decks, and buildings. Early-morning, night, and weekend routes available across Broward.</p>
+      <p><a href="/services/hoa-and-commercial-schedules.html">Learn more →</a></p>
+    </article>
+
+    <!-- Heavy Equipment & Dumpster Pads -->
+    <article class="card">
+      <h3><a href="/services/heavy-equipment-and-dumpster-pads.html">Heavy Equipment &amp; Dumpster Pad Cleaning</a></h3>
+      <p>Degreasing and sanitation for pads, enclosures, loading zones, and equipment yards. Keep commercial properties safe, compliant, and odor-controlled.</p>
+      <p><a href="/services/heavy-equipment-and-dumpster-pads.html">Learn more →</a></p>
+    </article>
+  </section>
+
+  <!-- Service area + CTA -->
+  <h2>Service Area</h2>
+  <p>Coral Springs · Parkland · Fort Lauderdale · and all of Broward County.</p>
+
+  <p><a href="/#contact">Request a free quote</a> · <a href="/#gallery">See before &amp; after photos</a></p>
+</body>
+</html>
