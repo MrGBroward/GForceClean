@@ -1,46 +1,55 @@
 import React from "react";
 
-/* ---------- simple design tokens ---------- */
+/* =========================
+   Design tokens (declare once)
+   ========================= */
+const colors = {
+  bg: "#0f172a",       // deep slate (hero)
+  panel: "#f8fafc",    // light section
+  ink: "#0f172a",
+  sub: "#334155",
+  border: "#e5e7eb",
+  primary: "#0074de"
+};
+
 const container = { maxWidth: 1200, margin: "0 auto", padding: "0 18px" };
-const h1 = { fontSize: "2.5rem", margin: "0 0 10px" };   // larger than before
+const h1 = { fontSize: "2.5rem", lineHeight: 1.2, margin: "0 0 12px" };
 const h2 = { fontSize: "1.6rem", margin: "0 0 8px" };
 const p  = { margin: "0 0 12px", color: colors.sub, fontSize: 18 };
 
-const container = { maxWidth: 1100, margin: "0 auto", padding: "0 16px" };
-const h1 = { fontSize: "2rem", margin: "0 0 10px" };
-const h2 = { fontSize: "1.5rem", margin: "0 0 8px" };
-const p  = { margin: "0 0 12px", color: colors.sub };
-
 const btnSolid = {
   display: "inline-block", background: colors.ink, color: "#fff",
-  padding: "10px 16px", borderRadius: 8, textDecoration: "none", border: `1px solid ${colors.ink}`
+  padding: "12px 18px", borderRadius: 8, textDecoration: "none",
+  border: `1px solid ${colors.ink}`
 };
 const btnOutline = {
   display: "inline-block", background: "#fff", color: colors.ink,
-  padding: "10px 16px", borderRadius: 8, textDecoration: "none", border: `1px solid ${colors.border}`
+  padding: "12px 18px", borderRadius: 8, textDecoration: "none",
+  border: `1px solid ${colors.border}`
 };
 
-/* ---------- HEADER ---------- */
-/* ---------- HEADER (logo + veteran badge + Klarna) ---------- */
+/* =========================
+   Header (with enlarged logos + Klarna)
+   ========================= */
 function Header() {
   return (
     <header style={{ background: "#fff", borderBottom: `1px solid ${colors.border}` }}>
-      <div style={{ ...container, display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 72, gap: 16 }}>
+      <div style={{ ...container, display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 80, gap: 16 }}>
         {/* Brand + logos */}
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none", color: colors.ink }}>
+        <a href="/" style={{ display: "flex", alignItems: "center", gap: 14, textDecoration: "none", color: colors.ink }}>
           {/* Company logo (upload to /public/images/logo.png) */}
           <img
             src="/images/logo.png"
             alt="G-Force Exterior Cleaning Services"
-            style={{ height: 48, width: "auto", display: "block" }}
+            style={{ height: 96, width: "auto", display: "block" }}   // doubled from 48 → 96
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
-          <span style={{ fontWeight: 800, fontSize: "1.25rem" }}>G-Force Exterior Cleaning</span>
-          {/* Veteran-owned badge (upload to /public/images/veteran-owned.png or .svg) */}
+          <span style={{ fontWeight: 800, fontSize: "1.35rem" }}>G-Force Exterior Cleaning</span>
+          {/* Veteran-owned badge (upload to /public/images/veteran-owned.png) */}
           <img
             src="/images/veteran-owned.png"
             alt="Veteran Owned"
-            style={{ height: 36, width: "auto", display: "block" }}
+            style={{ height: 72, width: "auto", display: "block" }}    // doubled from 36 → 72
             onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         </a>
@@ -57,39 +66,36 @@ function Header() {
   );
 }
 
-
-/* ---------- HERO ---------- */
-/* ---------- HERO (larger text + veteran line + CTAs) ---------- */
+/* =========================
+   Hero (bold text + veteran line + Klarna)
+   ========================= */
 function Hero() {
   return (
     <section style={{ background: colors.bg, color: "#fff", padding: "64px 0" }}>
       <div style={{ ...container, maxWidth: 1200 }}>
-        <h1 style={{ fontSize: "2.5rem", lineHeight: 1.2, margin: "0 0 12px", color: "#fff" }}>
-          Pressure Cleaning in Broward County
-        </h1>
-        <p style={{ fontSize: 18, margin: "0 0 8px", color: "#dbeafe" }}>
+        <h1 style={{ ...h1, color: "#fff" }}>Pressure Cleaning in Broward County</h1>
+        <p style={{ ...p, color: "#dbeafe", marginBottom: 8 }}>
           <strong>Veteran-Owned &amp; Insured.</strong> G-Force Exterior Cleaning Services helps South Florida
           properties look their best while protecting roofs, paint, and landscaping.
         </p>
-        <p style={{ fontSize: 18, margin: "0 0 0", color: "#cbd5e1" }}>
+        <p style={{ ...p, color: "#cbd5e1", marginBottom: 0 }}>
           We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and
           flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo
           documentation, and results you can see.
         </p>
-
-        {/* CTAs */}
         <div style={{ marginTop: 20, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <a href="#contact" style={{ ...btnSolid, padding: "12px 18px" }}>Get a Free Quote</a>
-          <a href="/finance.html" style={{ ...btnOutline, padding: "12px 18px" }}>Finance with Klarna</a>
-          <a href="#gallery" style={{ ...btnOutline, padding: "12px 18px" }}>See Before &amp; After</a>
+          <a href="#contact" style={btnSolid}>Get a Free Quote</a>
+          <a href="/finance.html" style={btnOutline}>Finance with Klarna</a>
+          <a href="#gallery" style={btnOutline}>See Before &amp; After</a>
         </div>
       </div>
     </section>
   );
 }
 
-
-/* ---------- SERVICES (with internal links) ---------- */
+/* =========================
+   Services (internal links)
+   ========================= */
 function ServicesSection() {
   return (
     <section id="services" style={{ padding: "32px 0", background: "#fff" }}>
@@ -108,7 +114,9 @@ function ServicesSection() {
   );
 }
 
-/* ---------- GALLERY (static imgs are fine; missing files won’t break build) ---------- */
+/* =========================
+   Gallery (static images; safe if missing)
+   ========================= */
 function GallerySection() {
   const imgStyle = { width: "100%", borderRadius: 12, border: `1px solid ${colors.border}` };
   const grid = {
@@ -124,13 +132,15 @@ function GallerySection() {
           <img src="/images/before-and-after-house-2.jpg" alt="House cleaning – before & after" style={imgStyle} />
           <img src="/images/before-and-after-bulldozer-2.jpg" alt="Heavy equipment cleaning – before & after" style={imgStyle} />
         </div>
-        <p style={{ ...p, marginTop: 10 }}></p>
+        <p style={{ ...p, marginTop: 10 }}>Tip: add more images to <code>/public/images/</code> and reference them here.</p>
       </div>
     </section>
   );
 }
 
-/* ---------- CONTACT (Netlify Forms) ---------- */
+/* =========================
+   Contact (Netlify Forms)
+   ========================= */
 function ContactSection() {
   const field = { display: "grid", gap: 6, marginBottom: 12 };
   const label = { fontSize: 14, color: colors.sub };
@@ -164,7 +174,9 @@ function ContactSection() {
   );
 }
 
-/* ---------- FOOTER ---------- */
+/* =========================
+   Footer
+   ========================= */
 function Footer() {
   const linkStyle = { color: "#fff", textDecoration: "underline", margin: "0 10px" };
   return (
@@ -184,7 +196,9 @@ function Footer() {
   );
 }
 
-/* ---------- APP ROOT ---------- */
+/* =========================
+   App Root
+   ========================= */
 export default function App() {
   return (
     <div>
