@@ -63,20 +63,29 @@ function Header() {
 
 
 /* ---------- HERO ---------- */
+/* ---------- HERO (larger text + veteran line + CTAs) ---------- */
 function Hero() {
   return (
-    <section style={{ background: colors.bg, color: "#fff", padding: "48px 0" }}>
-      <div style={container}>
-        <h1 style={{ ...h1, color: "#fff" }}>Pressure Cleaning in Broward County</h1>
-        <p style={{ ...p, color: "#cbd5e1" }}>
-          G-Force Exterior Cleaning Services helps South Florida properties look their best while protecting roofs, paint, and landscaping.
-          We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and flexible pricing,
-          especially for long-term and multi-site contracts. Expect clear communication, photo documentation, and results you can see.
+    <section style={{ background: colors.bg, color: "#fff", padding: "64px 0" }}>
+      <div style={{ ...container, maxWidth: 1200 }}>
+        <h1 style={{ fontSize: "2.5rem", lineHeight: 1.2, margin: "0 0 12px", color: "#fff" }}>
+          Pressure Cleaning in Broward County
+        </h1>
+        <p style={{ fontSize: 18, margin: "0 0 8px", color: "#dbeafe" }}>
+          <strong>Veteran-Owned &amp; Insured.</strong> G-Force Exterior Cleaning Services helps South Florida
+          properties look their best while protecting roofs, paint, and landscaping.
         </p>
-        <div style={{ marginTop: 18, display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <a href="#contact" style={btnSolid}>Get a Free Quote</a>
-          <a href="/finance.html" style={btnOutline}>Finance with Klarna</a>
-          <a href="#gallery" style={btnOutline}>See Before &amp; After</a>
+        <p style={{ fontSize: 18, margin: "0 0 0", color: "#cbd5e1" }}>
+          We schedule around your needs—early mornings, weekends, or off-peak hours—and we offer financing and
+          flexible pricing, especially for long-term and multi-site contracts. Expect clear communication, photo
+          documentation, and results you can see.
+        </p>
+
+        {/* CTAs */}
+        <div style={{ marginTop: 20, display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <a href="#contact" style={{ ...btnSolid, padding: "12px 18px" }}>Get a Free Quote</a>
+          <a href="/finance.html" style={{ ...btnOutline, padding: "12px 18px" }}>Finance with Klarna</a>
+          <a href="#gallery" style={{ ...btnOutline, padding: "12px 18px" }}>See Before &amp; After</a>
         </div>
       </div>
     </section>
