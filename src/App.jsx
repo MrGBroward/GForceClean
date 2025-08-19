@@ -92,6 +92,7 @@ function Hero() {
   );
 }
 
+
 /* ---------- SERVICES (with internal links) ---------- */
 function ServicesSection() {
   return (
@@ -127,7 +128,7 @@ function GallerySection() {
           <img src="/images/before-and-after-house-2.jpg" alt="House cleaning – before & after" style={imgStyle} />
           <img src="/images/before-and-after-bulldozer-2.jpg" alt="Heavy equipment cleaning – before & after" style={imgStyle} />
         </div>
-        <p style={{ ...p, marginTop: 10 }
+        <p style={{ ...p, marginTop: 10 }}>Tip: add more images to <code>/public/images/</code> and reference them here.</p>
       </div>
     </section>
   );
