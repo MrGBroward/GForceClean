@@ -1,14 +1,10 @@
 import React from "react";
 
 /* ---------- simple design tokens ---------- */
-const colors = {
-  bg: "#0f172a",       // deep slate for hero bg
-  panel: "#f8fafc",    // light panel bg
-  ink: "#0f172a",
-  sub: "#334155",
-  border: "#e5e7eb",
-  primary: "#0074de"
-};
+const container = { maxWidth: 1200, margin: "0 auto", padding: "0 18px" };
+const h1 = { fontSize: "2.5rem", margin: "0 0 10px" };   // larger than before
+const h2 = { fontSize: "1.6rem", margin: "0 0 8px" };
+const p  = { margin: "0 0 12px", color: colors.sub, fontSize: 18 };
 
 const container = { maxWidth: 1100, margin: "0 auto", padding: "0 16px" };
 const h1 = { fontSize: "2rem", margin: "0 0 10px" };
