@@ -79,7 +79,7 @@ function Hero() {
           restores curb appeal and protects your property. Flexible scheduling, photo documentation, and financing via Klarna.
         </p>
 
-        <div style={{ marginTop: 18, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+<div style={{ marginTop: 18, display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
   <a href="#contact" style={btnSolid}>Get a Free Quote</a>
   <a href="/finance" style={btnOutline}>Finance with Klarna</a>
   <a href="#gallery" style={btnOutline}>See Before & After</a>
