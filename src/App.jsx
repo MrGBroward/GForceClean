@@ -25,21 +25,42 @@ const btnOutline = {
 };
 
 /* ---------- HEADER ---------- */
+/* ---------- HEADER (logo + veteran badge + Klarna) ---------- */
 function Header() {
   return (
     <header style={{ background: "#fff", borderBottom: `1px solid ${colors.border}` }}>
-      <div style={{ ...container, display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        <a href="/" style={{ textDecoration: "none", color: colors.ink, fontWeight: 700 }}>G-Force Exterior Cleaning</a>
-        <nav style={{ display: "flex", gap: 14 }}>
+      <div style={{ ...container, display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 72, gap: 16 }}>
+        {/* Brand + logos */}
+        <a href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none", color: colors.ink }}>
+          {/* Company logo (upload to /public/images/logo.png) */}
+          <img
+            src="/images/logo.png"
+            alt="G-Force Exterior Cleaning Services"
+            style={{ height: 48, width: "auto", display: "block" }}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
+          <span style={{ fontWeight: 800, fontSize: "1.25rem" }}>G-Force Exterior Cleaning</span>
+          {/* Veteran-owned badge (upload to /public/images/veteran-owned.png or .svg) */}
+          <img
+            src="/images/veteran-owned.png"
+            alt="Veteran Owned"
+            style={{ height: 36, width: "auto", display: "block" }}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
+          />
+        </a>
+
+        {/* Nav */}
+        <nav style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
           <a href="#services" style={{ color: colors.ink, textDecoration: "none" }}>Services</a>
-          <a href="/finance.html" style={{ ...btnOutline, padding: "6px 12px" }}>Finance with Klarna</a>
           <a href="#gallery" style={{ color: colors.ink, textDecoration: "none" }}>Gallery</a>
           <a href="#contact" style={{ color: colors.ink, textDecoration: "none" }}>Contact</a>
+          <a href="/finance.html" style={{ ...btnOutline, padding: "8px 14px" }}>Finance with Klarna</a>
         </nav>
       </div>
     </header>
   );
 }
+
 
 /* ---------- HERO ---------- */
 function Hero() {
